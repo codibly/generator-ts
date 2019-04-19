@@ -4,5 +4,6 @@ coverage
 .DS_Store
 yarn-error.log
 
+lib/generator/index.js
 lib/generator/*/index.js
 lib/trait/*.js
