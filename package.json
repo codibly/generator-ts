@@ -70,6 +70,15 @@
       "<rootDir>/test/**/*.ts"
     ]
   },
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "beta",
+        "prerelease": true
+      }
+    ]
+  },
   "dependencies": {
     "chalk": "^2.1.0",
     "fs-extra": "^7.0.1",
