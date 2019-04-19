@@ -1,0 +1,8 @@
+node_modules
+coverage
+.idea
+.DS_Store
+yarn-error.log
+
+lib/generator/*/index.js
+lib/trait/*.js

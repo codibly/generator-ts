@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "importHelpers": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./lib",
+    "typeRoots": ["./node_modules/@types", "./type"],
+    "esModuleInterop": true
+  },
+  "exclude": ["lib/generator/**/templates/**/*.ts", "test"]
+}

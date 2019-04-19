@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - 10
+  - 8
+  - 6
+
+install:
+  - yarn install --frozen-lockfile
+
+script:
+  - yarn build
+  - yarn test
+  - yarn lint
+
+deploy:
+  - provider: script
+    script: yarn run publish --dry-run
+    skip_cleanup: true
+    on:
+      node: 10
+      branch: master
