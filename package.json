@@ -1,7 +1,7 @@
 {
   "name": "generator-codibly-ts",
-  "version": "0.0.1",
-  "description": "Generator for Codibly TypeScript projects",
+  "version": "0.0.0-semantic-release",
+  "description": "Generator for TypeScript projects",
   "keywords": [
     "boilerplate",
     "library",
@@ -13,20 +13,19 @@
   "license": "MIT",
   "author": {
     "name": "Piotr Oleś",
-    "email": "piotr.oles@codibly.com",
-    "url": ""
+    "email": "piotr.oles@codibly.com"
   },
   "files": [
     "lib/generator"
   ],
   "scripts": {
     "build": "tsc",
-    "copy": "",
     "precommit": "lint-staged && yarn build && yarn test",
     "commit": "yarn exec git-cz",
     "format": "prettier --write \"src/**/*\"",
     "lint": "tslint --project tsconfig.ci.json",
-    "test": "jest"
+    "test": "jest",
+    "semantic-release": "semantic-release"
   },
   "husky": {
     "hooks": {
@@ -102,6 +101,7 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.1",
     "yeoman-assert": "^3.1.0",
-    "yeoman-test": "^1.7.0"
+    "yeoman-test": "^1.7.0",
+    "semantic-release": "^15.13.3"
   }
 }

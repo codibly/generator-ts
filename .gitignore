@@ -2,6 +2,7 @@ node_modules
 coverage
 .idea
 .DS_Store
+yarn-error.log
 
-lib/generator/**/*.js
+lib/generator/*/index.js
 lib/trait/*.js
