@@ -16,7 +16,8 @@
     "email": "piotr.oles@codibly.com"
   },
   "files": [
-    "generators"
+    "generators",
+    "traits"
   ],
   "main": "generators/index.js",
   "scripts": {
