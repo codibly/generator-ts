@@ -24,7 +24,7 @@ describe("yo codibly-ts:config-rollup", () => {
         rollup: "^1.0.2",
         "rollup-plugin-cleaner": "^0.2.0",
         "rollup-plugin-sourcemaps": "^0.4.2",
-        "rollup-plugin-typescript2": "^0.20.1"
+        "rollup-plugin-typescript2": "^0.21.1"
       }
     });
   });

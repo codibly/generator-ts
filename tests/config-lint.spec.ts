@@ -21,13 +21,13 @@ describe("yo codibly-ts:config-lint", () => {
         lint: "tslint --project tsconfig.json",
         format: 'prettier --write "src/**/*"',
         precommit: "lint-staged && yarn build && yarn test",
-        commit: "yarn exec git-cz"
+        commit: "./node_modules/.bin/git-cz"
       },
       devDependencies: {
         "@commitlint/config-conventional": "^7.5.0",
         commitlint: "^7.5.2",
         "git-cz": "^3.0.1",
-        husky: "^1.3.1",
+        husky: "^2.3.0",
         "lint-staged": "^8.1.0",
         prettier: "^1.15.3",
         tslint: "^5.12.0",
