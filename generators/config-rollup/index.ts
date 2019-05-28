@@ -8,24 +8,16 @@ export = class ConfigRollupGenerator extends Generator {
     const packageJson = this.traits.readPackageJson();
 
     this.traits.extendPackageJson({
-      main:
-        !packageJson.main && !this.traits.usesLerna()
-          ? "lib/index.js"
-          : packageJson.main,
-      module:
-        !packageJson.module && !this.traits.usesLerna()
-          ? "lib/index.es.js"
-          : packageJson.module,
+      main: !packageJson.main ? "lib/index.js" : packageJson.main,
+      module: !packageJson.module ? "lib/index.es.js" : packageJson.module,
       scripts: {
-        build: this.traits.usesLerna()
-          ? "lerna exec -- rollup -c --config ../../rollup.config.js"
-          : "rollup -c"
+        build: "rollup -c"
       },
       devDependencies: {
         rollup: "^1.0.2",
         "rollup-plugin-cleaner": "^0.2.0",
         "rollup-plugin-sourcemaps": "^0.4.2",
-        "rollup-plugin-typescript2": "^0.20.1"
+        "rollup-plugin-typescript2": "^0.21.1"
       }
     });
   }
@@ -36,11 +28,7 @@ export = class ConfigRollupGenerator extends Generator {
       this.destinationPath("rollup.config.js")
     );
     this.traits.addGitIgnoreEntries(
-      [
-        "### Rollup",
-        this.traits.usesLerna() ? "/packages/**/lib" : "/lib",
-        ".rpt2_cache"
-      ].join("\n")
+      ["### Rollup", "/lib", ".rpt2_cache"].join("\n")
     );
   }
 

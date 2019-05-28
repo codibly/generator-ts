@@ -12,7 +12,7 @@
 This package is available as an [npm package](https://www.npmjs.com/package/<%= name %>).
 
 ```
-npm install <%= name %>
+npm install --save <%= name %>
 ```
 
 ## Usage
