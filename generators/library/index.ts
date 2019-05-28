@@ -1,6 +1,6 @@
 import * as path from "path";
 import Generator from "yeoman-generator";
-import traits from "../../trait";
+import traits from "../../traits";
 
 interface Answers {
   structure: "single" | "multi";

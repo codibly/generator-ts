@@ -5,9 +5,9 @@
     "importHelpers": true,
     "strict": true,
     "moduleResolution": "node",
-    "baseUrl": "./lib",
-    "typeRoots": ["./node_modules/@types", "./type"],
+    "baseUrl": "./",
+    "typeRoots": ["./node_modules/@types", "./types"],
     "esModuleInterop": true
   },
-  "exclude": ["lib/generator/**/templates/**/*.ts", "test"]
+  "exclude": ["generators/**/templates", "tests"]
 }
