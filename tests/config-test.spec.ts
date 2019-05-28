@@ -3,8 +3,8 @@ import helpers from "yeoman-test";
 
 describe("yo codibly-ts:config-test", () => {
   beforeAll(async () => {
-    await helpers.run(require("../lib/generator/config-test"), {
-      resolved: require.resolve("../lib/generator/config-test/index.js"),
+    await helpers.run(require("../generators/config-test"), {
+      resolved: require.resolve("../generators/config-test/index.js"),
       namespace: "codibly-ts:config-test"
     });
   });

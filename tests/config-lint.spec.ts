@@ -3,8 +3,8 @@ import helpers from "yeoman-test";
 
 describe("yo codibly-ts:config-lint", () => {
   beforeAll(async () => {
-    await helpers.run(require("../lib/generator/config-lint"), {
-      resolved: require.resolve("../lib/generator/config-lint/index.js"),
+    await helpers.run(require("../generators/config-lint"), {
+      resolved: require.resolve("../generators/config-lint/index.js"),
       namespace: "codibly-ts:config-lint"
     });
   });

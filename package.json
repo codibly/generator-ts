@@ -16,13 +16,14 @@
     "email": "piotr.oles@codibly.com"
   },
   "files": [
-    "lib/generator"
+    "generators"
   ],
+  "main": "generators/index.js",
   "scripts": {
     "build": "tsc",
     "precommit": "lint-staged && yarn build && yarn test",
     "commit": "yarn exec git-cz",
-    "format": "prettier --write \"src/**/*\"",
+    "format": "prettier --write \"generators/**/*\" \"tests/**/*\" \"traits/**/*\"",
     "lint": "tslint --project tsconfig.ci.json",
     "test": "jest",
     "semantic-release": "semantic-release"
@@ -67,7 +68,7 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "testMatch": [
-      "<rootDir>/test/**/*.ts"
+      "<rootDir>/tests/**/*.ts"
     ]
   },
   "release": {
@@ -75,6 +76,10 @@
       "master",
       {
         "name": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "alpha",
         "prerelease": true
       }
     ]

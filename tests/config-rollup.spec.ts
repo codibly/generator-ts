@@ -3,8 +3,8 @@ import helpers from "yeoman-test";
 
 describe("yo codibly-ts:config-rollup", () => {
   beforeAll(async () => {
-    await helpers.run(require("../lib/generator/config-rollup"), {
-      resolved: require.resolve("../lib/generator/config-rollup/index.js"),
+    await helpers.run(require("../generators/config-rollup"), {
+      resolved: require.resolve("../generators/config-rollup/index.js"),
       namespace: "codibly-ts:config-rollup"
     });
   });

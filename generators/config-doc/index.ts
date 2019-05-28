@@ -1,5 +1,5 @@
 import Generator from "yeoman-generator";
-import traits from "../../trait";
+import traits from "../../traits";
 
 export = class ConfigDocGenerator extends Generator {
   public traits = traits(this);
