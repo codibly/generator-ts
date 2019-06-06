@@ -10,7 +10,7 @@ describe("yo codibly-ts:config-test", () => {
   });
 
   it("generates required files", () => {
-    assert.file(["package.json", "README.md"]);
+    assert.file(["package.json", "README.md", "src/index.spec.ts"]);
   });
 
   it("extends package.json", () => {

@@ -19,8 +19,8 @@ export = class ConfigLintGenerator extends Generator {
         commit: "./node_modules/.bin/git-cz"
       },
       devDependencies: {
-        "@commitlint/config-conventional": "^7.5.0",
-        commitlint: "^7.5.2",
+        "@commitlint/config-conventional": "^8.0.0",
+        commitlint: "^8.0.0",
         "git-cz": "^3.0.1",
         husky: "^2.3.0",
         "lint-staged": "^8.1.0",
@@ -58,9 +58,8 @@ export = class ConfigLintGenerator extends Generator {
   }
 
   public writing() {
-    this.fs.copy(
-      this.templatePath("tslint.json"),
-      this.destinationPath("tslint.json")
+    ["tslint.json", "changelog.config.js"].forEach(file =>
+      this.fs.copy(this.templatePath(file), this.destinationPath(file))
     );
   }
 

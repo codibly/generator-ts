@@ -26,6 +26,13 @@ export = class ConfigTestGenerator extends Generator {
     );
   }
 
+  public writing() {
+    this.fs.copy(
+      this.templatePath("src/index.spec.ts"),
+      this.destinationPath("src/index.spec.ts")
+    );
+  }
+
   public install() {
     this.yarnInstall();
   }

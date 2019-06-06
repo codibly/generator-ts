@@ -33,7 +33,7 @@ export = class PackageGenerator extends Generator {
         type: "input",
         name: "version",
         message: "Initial version of the package",
-        default: "0.0.0"
+        default: "0.0.0-semantic-release"
       },
       {
         type: "input",
@@ -59,13 +59,7 @@ export = class PackageGenerator extends Generator {
   }
 
   public configuring() {
-    [
-      ".travis.yml",
-      "LICENSE",
-      "package.json",
-      "README.md",
-      "tsconfig.json"
-    ].forEach(file => {
+    [".travis.yml", "LICENSE", "package.json", "README.md"].forEach(file => {
       this.fs.copyTpl(
         this.templatePath(file),
         this.destinationPath(file),

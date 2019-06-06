@@ -10,6 +10,10 @@ export = class ConfigGenerator extends Generator {
         message: "What type of configuration do you want to generate",
         choices: [
           {
+            name: "TypeScript setup",
+            value: "typescript"
+          },
+          {
             name: `Docs generator setup ${chalk.dim("(typedoc)")}`,
             value: "doc"
           },

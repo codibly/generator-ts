@@ -10,7 +10,12 @@ describe("yo codibly-ts:config-lint", () => {
   });
 
   it("generates required files", () => {
-    assert.file([`package.json`, `README.md`, `tslint.json`]);
+    assert.file([
+      `package.json`,
+      `README.md`,
+      `tslint.json`,
+      "changelog.config.js"
+    ]);
   });
 
   it("extends package.json", () => {
@@ -24,8 +29,8 @@ describe("yo codibly-ts:config-lint", () => {
         commit: "./node_modules/.bin/git-cz"
       },
       devDependencies: {
-        "@commitlint/config-conventional": "^7.5.0",
-        commitlint: "^7.5.2",
+        "@commitlint/config-conventional": "^8.0.0",
+        commitlint: "^8.0.0",
         "git-cz": "^3.0.1",
         husky: "^2.3.0",
         "lint-staged": "^8.1.0",
