@@ -1,11 +1,25 @@
-import Generator from "yeoman-generator";
-import traits from "../../traits";
+import assert from "yeoman-assert";
+import helpers from "yeoman-test";
 
-export = class WebpackConfigGenerator extends Generator {
-  public traits = traits(this);
+describe("yo codibly-ts:config-webpack", () => {
+  beforeAll(async () => {
+    await helpers.run(require("../generators/config-webpack"), {
+      resolved: require.resolve("../generators/config-webpack/index.js"),
+      namespace: "codibly-ts:config-webpack"
+    });
+  });
 
-  public configuring() {
-    this.traits.extendPackageJson({
+  it("generates required files", () => {
+    assert.file([
+      "package.json",
+      "webpack.config.js",
+      "src/index.html",
+      "src/index.tsx"
+    ]);
+  });
+
+  it("extends package.json", () => {
+    assert.jsonFileContent("package.json", {
       scripts: {
         dev: "webpack-dev-server --open",
         build: "webpack -p"
@@ -25,15 +39,5 @@ export = class WebpackConfigGenerator extends Generator {
         "webpack-dev-server": "^3.1.14"
       }
     });
-  }
-
-  public writing() {
-    ["webpack.config.js", "src/index.tsx", "src/index.html"].forEach(file => {
-      this.fs.copy(this.templatePath(file), this.destinationPath(file));
-    });
-  }
-
-  public install() {
-    this.yarnInstall();
-  }
-};
+  });
+});

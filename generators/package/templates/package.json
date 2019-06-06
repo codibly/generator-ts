@@ -1,7 +1,3 @@
 {
-  "license": "MIT",
-  "devDependencies": {
-    "tslib": "^1.9.3",
-    "typescript": "^3.3.3"
-  }
+  "license": "MIT"
 }

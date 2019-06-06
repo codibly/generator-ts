@@ -23,9 +23,8 @@ export = class ConfigRollupGenerator extends Generator {
   }
 
   public writing() {
-    this.fs.copy(
-      this.templatePath("rollup.config.js"),
-      this.destinationPath("rollup.config.js")
+    ["rollup.config.js", "src/index.ts"].forEach(file =>
+      this.fs.copy(this.templatePath(file), this.destinationPath(file))
     );
     this.traits.addGitIgnoreEntries(
       ["### Rollup", "/lib", ".rpt2_cache"].join("\n")

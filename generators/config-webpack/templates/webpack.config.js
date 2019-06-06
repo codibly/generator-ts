@@ -1,5 +1,5 @@
 const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
-const CleanPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlPlugin = require("html-webpack-plugin");
 const DefinePlugin = require("webpack/lib/DefinePlugin");
 const NamedModulesPlugin = require("webpack/lib/NamedModulesPlugin");
@@ -8,17 +8,14 @@ const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const RobotstxtPlugin = require("robotstxt-webpack-plugin");
 const path = require("path");
 
-module.exports = (env, options) => {
+module.exports = (env = {}, options = {}) => {
   const config = {
     context: __dirname,
     entry: {
-      client: "./src/App/index.tsx"
+      client: "./src/index.tsx"
     },
     mode: options.mode,
     devtool: "source-map",
-    watchOptions: {
-      poll: true
-    },
     devServer: {
       contentBase: path.join(__dirname, "dist"),
       compress: true,
@@ -72,7 +69,7 @@ module.exports = (env, options) => {
         formatter: "codeframe"
       }),
       new HtmlPlugin({
-        template: "./src/App/index.html",
+        template: "./src/index.html",
         filename: "index.html",
         inject: "body"
       }),
@@ -86,7 +83,7 @@ module.exports = (env, options) => {
 
   if (options.mode === "production") {
     config.plugins.push(
-      new CleanPlugin(["dist"]),
+      new CleanWebpackPlugin(),
       new RobotstxtPlugin({
         policy: [
           {
