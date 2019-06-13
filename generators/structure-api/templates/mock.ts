@@ -1,0 +1,4 @@
+
+export namespace <%= name %>Mock {
+
+}
