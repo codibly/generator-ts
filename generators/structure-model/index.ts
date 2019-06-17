@@ -15,7 +15,9 @@ export = class StructureModelGenerator extends Generator {
   public writing() {
     this.fs.copyTpl(
       this.templatePath("model.ts"),
-      this.destinationPath(`./src/${this.name}/model/${this.name}.ts`),
+      this.destinationPath(
+        `./${this.config.get("rootDir")}/${this.name}/model/${this.name}.ts`
+      ),
       { name: this.name }
     );
   }

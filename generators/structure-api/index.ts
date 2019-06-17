@@ -15,7 +15,11 @@ export = class StructureApiGenerator extends Generator {
     ["api", "dto", "mapper", "mock"].forEach(file => {
       this.fs.copyTpl(
         this.templatePath(`${file}.ts`),
-        this.destinationPath(`./src/${this.name}/api/${this.name}.${file}.ts`),
+        this.destinationPath(
+          `./${this.config.get("rootDir")}/${this.name}/api/${
+            this.name
+          }.${file}.ts`
+        ),
         { name: this.name, nameCamelCase: camelCase(this.name) }
       );
     });
