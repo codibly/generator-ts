@@ -22,6 +22,33 @@ export = class LibraryGenerator extends Generator {
     this.composeWith(require.resolve("../config-release"), {});
   }
 
+  public async prompting() {
+    const { usesReact } = await this.prompt([
+      {
+        type: "expand",
+        name: "usesReact",
+        message: "Will this library use React?",
+        default: "n",
+        choices: [
+          {
+            key: "y",
+            name: "Yes",
+            value: true
+          },
+          {
+            key: "n",
+            name: "No",
+            value: false
+          }
+        ]
+      }
+    ]);
+
+    if (usesReact) {
+      this.composeWith(require.resolve("../config-react"), {});
+    }
+  }
+
   public install() {
     this.yarnInstall();
   }

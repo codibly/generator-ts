@@ -12,5 +12,11 @@ export = class AppGenerator extends Generator {
     this.composeWith(require.resolve("../config-test"), {});
     this.composeWith(require.resolve("../config-lint"), {});
     this.composeWith(require.resolve("../config-webpack"), {});
+    this.composeWith(require.resolve("../config-react"), {});
+    this.composeWith(require.resolve("../config-storybook"), {});
+  }
+
+  public install() {
+    this.yarnInstall();
   }
 };
