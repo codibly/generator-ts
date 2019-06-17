@@ -22,6 +22,10 @@ export = class ConfigGenerator extends Generator {
             value: "lint"
           },
           {
+            name: "Storybook setup",
+            value: "storybook"
+          },
+          {
             name: `Rollup setup`,
             value: "rollup"
           },
@@ -40,6 +44,10 @@ export = class ConfigGenerator extends Generator {
           {
             name: `Ignore files ${chalk.dim("(.gitignore)")}`,
             value: "ignore"
+          },
+          {
+            name: `React setup ${chalk.dim("(+ @testing-library/react)")}`,
+            value: "react"
           }
         ]
       }
