@@ -36,7 +36,7 @@ There four types of frames you can generate
 - **Application**
 - **Configuration**
 
-## Structure🚧🚧💅
+## Structure
 
 To generate part of an app structure according to Codibly guidelines run `yo codibly-ts:strucutre`.
 

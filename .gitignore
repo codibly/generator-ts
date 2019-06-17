@@ -6,4 +6,5 @@ yarn-error.log
 
 generators/index.js
 generators/*/index.js
+src/*.js
 traits/*.js
