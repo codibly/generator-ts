@@ -38,7 +38,11 @@ There four types of frames you can generate
 
 ## Structure
 
-To generate part of an app structure according to Codibly guidelines run `yo codibly-ts:strucutre`.
+To generate part of an app structure according to Codibly guidelines run
+
+`yo codibly-ts:strucutre`
+
+Always run Structure generator from the main project directory.
 
 You will be asked to choose one of four parts of the structure
 
@@ -55,9 +59,10 @@ You can customize the generator output by creating `.yo-rc.json` file in your pr
 Important thing is to put `"generator-codibly-ts"` field into this file.
 Under this key you can put the following fields:
 
-| field   | value                                             |
-| ------- | ------------------------------------------------- |
-| styling | "jss" &#124; "styled-components" &#124; "emotion" |
+| field   |                          value                          |
+| ------- | :-----------------------------------------------------: |
+| rootDir |                        `string`                         |
+| styling | `'jss'` &#124; `'styled-components'` &#124; `'emotion'` |
 
 Example config
 
