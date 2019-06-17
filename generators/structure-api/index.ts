@@ -1,9 +1,23 @@
-import * as emoji from "node-emoji";
+import camelCase from "camel-case";
 import Generator from "yeoman-generator";
+import { nameQuestion } from "../../src/questions";
 
-export = class StructureModuleGenerator extends Generator {
+export = class StructureApiGenerator extends Generator {
+  private name: any;
+
   public async prompting() {
-    // tslint:disable-next-line
-    console.log("Module generator");
+    const { name } = await this.prompt(nameQuestion("API", this.options.name));
+
+    this.name = this.options.name || name;
+  }
+
+  public writing() {
+    ["api", "dto", "mapper", "mock"].forEach(file => {
+      this.fs.copyTpl(
+        this.templatePath(`${file}.ts`),
+        this.destinationPath(`./src/${this.name}/api/${this.name}.${file}.ts`),
+        { name: this.name, nameCamelCase: camelCase(this.name) }
+      );
+    });
   }
 };

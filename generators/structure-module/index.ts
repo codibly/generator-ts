@@ -1,35 +1,17 @@
-import * as emoji from "node-emoji";
 import Generator from "yeoman-generator";
+import { nameQuestion } from "../../src/questions";
 
-export = class StructureGenerator extends Generator {
+export = class StructureModuleGenerator extends Generator {
+  private name: any;
+
   public async prompting() {
-    // tslint:disable-next-line
-    const { task } = await this.prompt([
-      {
-        type: "list",
-        name: "task",
-        message: "What do you want to generate",
-        choices: [
-          {
-            name: `Module ${emoji.get("small_orange_diamond")}`,
-            value: "module"
-          },
-          {
-            name: `API ${emoji.get("shield")}`,
-            value: "api"
-          },
-          {
-            name: `Component ${emoji.get("question_mark")}`,
-            value: "component"
-          },
-          {
-            name: `Model ${emoji.get("diamon_with_a_dot")}`,
-            value: "model"
-          }
-        ]
-      }
-    ]);
+    const { name } = await this.prompt(nameQuestion("Module"));
 
-    this.composeWith(require.resolve(`../structure-${task}`), {});
+    this.name = name;
+
+    this.composeWith(require.resolve(`../structure-api`), { name: this.name });
+    this.composeWith(require.resolve(`../structure-model`), {
+      name: this.name
+    });
   }
 };
