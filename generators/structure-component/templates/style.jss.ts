@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from 'jss';
 
 export const Wrapper = styled.div({
 

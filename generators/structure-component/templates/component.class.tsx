@@ -3,19 +3,17 @@ import { compose } from 'redux';
 
 import { Wrapper } from './<%= name %>.style';
 
-type StatProps = {
+export namespace <%= name %> {
+  export type StatProps = {};
 
+  export type DispatchProps = {};
+
+  type OwnProps = {};
+
+  export type Props = OwnProps & StatProps & DispatchProps;
 }
 
-type DispatchProps = {
-
-}
-
-type Props = StatProps & DispatchProps & {
-
-}
-
-class <%= name %>Pure extends React.Component<Props> {
+class <%= name %>Pure extends React.Component<<%= name %>.Props> {
 
   render() {
     return (

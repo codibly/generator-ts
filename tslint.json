@@ -4,6 +4,7 @@
     "object-literal-sort-keys": false,
     "interface-name": [true, "never-prefix"],
     "array-type": [true, "array"],
-    "no-namespace": false
+    "no-namespace": false,
+    "no-shadowed-variable": false
   }
 }

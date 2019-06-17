@@ -1,1 +1,1 @@
-export const validateName = (input: any) => !!input || "Provide a name";
+export const nameRequired = (input: any) => !!input || "Provide a name";

@@ -86,6 +86,7 @@
     ]
   },
   "dependencies": {
+    "camel-case": "^3.0.0",
     "chalk": "^2.1.0",
     "fs-extra": "^8.0.1",
     "node-emoji": "^1.10.0",
