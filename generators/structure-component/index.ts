@@ -1,17 +1,18 @@
 import camelCase from "camel-case";
+import { Question } from "inquirer";
 import Generator from "yeoman-generator";
 import { nameQuestion } from "../../src/questions";
 
 interface FileConfigWithStringTemplate {
   templateName: string;
   fileNameSuffix?: string;
-  questions?: any;
+  question?: any;
 }
 
 interface FileConfigWithFunctionTemplate {
   templateName: (type: ComponentType) => string;
   fileNameSuffix: string;
-  questions?: any;
+  question?: Question;
 }
 
 type FileConfig = FileConfigWithStringTemplate | FileConfigWithFunctionTemplate;
@@ -21,15 +22,19 @@ enum ComponentType {
   FUNCTION = "function"
 }
 
+interface FileConfigAnswers {
+  type: ComponentType;
+}
+
 export = class StructureComponentGenerator extends Generator {
-  private name: any;
-  private answers: any;
+  private name: string;
+  private answers: FileConfigAnswers;
 
   private fileConfigs: FileConfig[] = [
     {
       templateName: (type: ComponentType) => `component.${type}.tsx`,
       fileNameSuffix: "tsx",
-      questions: {
+      question: {
         type: "list",
         name: "type",
         message: "What's type of the Component",
@@ -46,7 +51,7 @@ export = class StructureComponentGenerator extends Generator {
       }
     },
     {
-      templateName: `style.${this.config.get("styling") || "jss"}.ts`,
+      templateName: `style.${this.config.get("styling")}.ts`,
       fileNameSuffix: "style.ts"
     },
     {
@@ -64,9 +69,9 @@ export = class StructureComponentGenerator extends Generator {
   }
 
   public async promptingFromConfig() {
-    const questions = await this.fileConfigs
-      .filter(fileConfig => fileConfig.questions)
-      .reduce((acc, current) => acc.concat(current.questions), []);
+    const questions = this.fileConfigs
+      .map(fileConfig => fileConfig.question)
+      .filter(question => !!question);
 
     this.answers = await this.prompt(questions);
   }
@@ -85,7 +90,10 @@ export = class StructureComponentGenerator extends Generator {
     });
   }
 
-  private getTemplatePath = (fileConfig: FileConfig, answers: any): string => {
+  private getTemplatePath = (
+    fileConfig: FileConfig,
+    answers: FileConfigAnswers
+  ): string => {
     if (typeof fileConfig.templateName === "function") {
       return fileConfig.templateName(answers.type);
     }

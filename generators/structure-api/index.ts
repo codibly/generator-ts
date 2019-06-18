@@ -1,9 +1,11 @@
-import camelCase from "camel-case";
+import camelCase from "lodash/fp/camelCase";
+import toUpper from "lodash/fp/toUpper";
 import Generator from "yeoman-generator";
+
 import { nameQuestion } from "../../src/questions";
 
 export = class StructureApiGenerator extends Generator {
-  private name: any;
+  private name: string;
 
   public async prompting() {
     const { name } = await this.prompt(nameQuestion("API", this.options.name));
@@ -16,11 +18,15 @@ export = class StructureApiGenerator extends Generator {
       this.fs.copyTpl(
         this.templatePath(`${file}.ts`),
         this.destinationPath(
-          `./${this.config.get("rootDir")}/${this.name}/api/${
+          `./${this.config.get("rootDir")}/${this.options.module}/api/${
             this.name
-          }.${file}.ts`
+          }/${this.name}.${file}.ts`
         ),
-        { name: this.name, nameCamelCase: camelCase(this.name) }
+        {
+          name: this.name,
+          nameCamelCase: camelCase(this.name),
+          nameUpperCase: toUpper(this.name)
+        }
       );
     });
   }

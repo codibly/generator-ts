@@ -1,28 +1,29 @@
 import * as React from 'react';
-import { compose } from 'redux';
+import { compose, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
-import { Wrapper } from './<%= name %>.style';
+import { AppState } from 'App/store/AppState';
+
+import {  } from './<%= name %>.style';
 
 export namespace <%= name %> {
-  export type StatProps = {};
-
+  export type StateProps = {};
   export type DispatchProps = {};
-
-  type OwnProps = {};
-
-  export type Props = OwnProps & StatProps & DispatchProps;
+  export type Props = {};
+  export type ConnectedProps = Props & StateProps & DispatchProps;
 }
 
-class <%= name %>Pure extends React.Component<<%= name %>.Props> {
+class <%= name %>Dumb extends React.Component<<%= name %>.ConnectedProps> {
 
   render() {
-    return (
-      <Wrapper>
-      </Wrapper>
-    )
+    return ( )
   }
 }
 
-export const <%= name %> = compose(
+const mapStateToProps = (state: AppState): <%= name %>.StateProps => ({ });
 
-)(<%= name %>Pure);
+const mapDispatchToProps = (dispatch: Dispatch): <%= name %>.DispatchProps => ({ });
+
+export const <%= name %> = compose(
+  connect(mapStateToProps, mapDispatchToProps)
+)(<%= name %>Dumb);

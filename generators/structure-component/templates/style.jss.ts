@@ -1,5 +1,5 @@
 import styled from 'jss';
 
-export const Wrapper = styled.div({
+export const Styled = styled.div({
 
 });

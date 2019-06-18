@@ -2,7 +2,7 @@ import Generator from "yeoman-generator";
 import { nameQuestion } from "../../src/questions";
 
 export = class StructureModelGenerator extends Generator {
-  private name: any;
+  private name: string;
 
   public async prompting() {
     const { name } = await this.prompt(
@@ -16,7 +16,9 @@ export = class StructureModelGenerator extends Generator {
     this.fs.copyTpl(
       this.templatePath("model.ts"),
       this.destinationPath(
-        `./${this.config.get("rootDir")}/${this.name}/model/${this.name}.ts`
+        `./${this.config.get("rootDir")}/${this.options.module}/model/${
+          this.name
+        }.ts`
       ),
       { name: this.name }
     );

@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { FC } from 'react';
 
-import { Wrapper } from './<%= name %>.style';
+import { } from './<%= name %>.style';
 
-type Props = { };
-
-export const <%= name %> = (props: Props) => {
-  return (
-    <Wrapper>
-    </Wrapper>
-  );
+export namespace <%= name %> {
+  export type Props = { };
 }
+
+export const <%= name %>: FC<<%= name %>.Props> = (props) => {
+  return ( );
+};

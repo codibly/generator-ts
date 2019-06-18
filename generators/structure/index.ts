@@ -1,13 +1,7 @@
 import * as emoji from "node-emoji";
 import Generator from "yeoman-generator";
 import { defaultConfig } from "../../src/defaultConfig";
-
-enum Task {
-  COMPONENT = "component",
-  API = "api",
-  MODEL = "model",
-  MODULE = "module"
-}
+import { Task } from "../../src/enum/Task";
 
 export = class StructureGenerator extends Generator {
   public async prompting() {
