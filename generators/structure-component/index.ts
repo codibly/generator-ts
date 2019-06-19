@@ -1,5 +1,5 @@
-import camelCase from "camel-case";
 import { Question } from "inquirer";
+import camelCase from "lodash/fp/camelCase";
 import Generator from "yeoman-generator";
 import { nameQuestion } from "../../src/questions";
 
@@ -26,41 +26,16 @@ interface FileConfigAnswers {
   type: ComponentType;
 }
 
+interface Config {
+  styling: "jss" | "styled-components" | "emotion";
+  rootDir: string;
+}
+
 export = class StructureComponentGenerator extends Generator {
   private name: string;
+  private module: string;
   private answers: FileConfigAnswers;
-
-  private fileConfigs: FileConfig[] = [
-    {
-      templateName: (type: ComponentType) => `component.${type}.tsx`,
-      fileNameSuffix: "tsx",
-      question: {
-        type: "list",
-        name: "type",
-        message: "What's type of the Component",
-        choices: [
-          {
-            name: `Function component (Stateless)`,
-            value: ComponentType.FUNCTION
-          },
-          {
-            name: "Class component (Stateful)",
-            value: ComponentType.CLASS
-          }
-        ]
-      }
-    },
-    {
-      templateName: `style.${this.config.get("styling")}.ts`,
-      fileNameSuffix: "style.ts"
-    },
-    {
-      templateName: "story.tsx"
-    },
-    {
-      templateName: "spec.tsx"
-    }
-  ];
+  private fileConfig: FileConfig[];
 
   public async prompting() {
     const { name } = await this.prompt(nameQuestion("Component"));
@@ -68,8 +43,16 @@ export = class StructureComponentGenerator extends Generator {
     this.name = name;
   }
 
+  public makeModule() {
+    this.module = this.options.module || this.name;
+  }
+
+  public makeConfig() {
+    this.fileConfig = this.getFileConfig(this.config.getAll() as Config);
+  }
+
   public async promptingFromConfig() {
-    const questions = this.fileConfigs
+    const questions = this.fileConfig
       .map(fileConfig => fileConfig.question)
       .filter(question => !!question);
 
@@ -77,11 +60,11 @@ export = class StructureComponentGenerator extends Generator {
   }
 
   public writing() {
-    this.fileConfigs.forEach(async fileConfig => {
+    this.fileConfig.forEach(async fileConfig => {
       this.fs.copyTpl(
         this.templatePath(this.getTemplatePath(fileConfig, this.answers)),
         this.destinationPath(
-          `./${this.config.get("rootDir")}/${this.options.module}/component/${
+          `./${this.config.get("rootDir")}/${this.module}/component/${
             this.name
           }/${this.name}.${this.getFileNameSuffix(fileConfig)}`
         ),
@@ -104,4 +87,36 @@ export = class StructureComponentGenerator extends Generator {
   private getFileNameSuffix = (fileConfig: FileConfig): string => {
     return fileConfig.fileNameSuffix || (fileConfig.templateName as string);
   };
+
+  private getFileConfig = (config: Config): FileConfig[] => [
+    {
+      templateName: (type: ComponentType) => `component.${type}.tsx`,
+      fileNameSuffix: "tsx",
+      question: {
+        type: "list",
+        name: "type",
+        message: "What's type of the Component",
+        choices: [
+          {
+            name: `Function component (Stateless)`,
+            value: ComponentType.FUNCTION
+          },
+          {
+            name: "Class component (Stateful)",
+            value: ComponentType.CLASS
+          }
+        ]
+      }
+    },
+    {
+      templateName: `style.${config.styling}.ts`,
+      fileNameSuffix: "style.ts"
+    },
+    {
+      templateName: "story.tsx"
+    },
+    {
+      templateName: "spec.tsx"
+    }
+  ];
 };
