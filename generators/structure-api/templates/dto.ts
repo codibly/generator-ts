@@ -1,9 +1,7 @@
 
 export namespace <%= name %>Dto {
 
-  type Id = { id: string };
-
-  export type Base = Id & { };
+  export type Base = { id: string };
 
   export type ListElement = Base;
 

@@ -60,7 +60,7 @@ describe("yo codibly-ts:structure-api", () => {
 
   it("imports proper deps in Mapper", () => {
     assert.fileContent(mapperPath, "import { UserDto } from './User.dto';");
-    assert.fileContent(mapperPath, "import { User } from '../model/User';");
+    assert.fileContent(mapperPath, "import { User } from '../../model/User';");
   });
 
   it("creates proper Mapper interface", () => {
