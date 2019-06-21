@@ -15,10 +15,18 @@ interface ModuleChoice {
 
 const isDirectory = ({ path }: Directory) => lstatSync(path).isDirectory();
 
-const getDirectories = (baseDir: string): Directory[] =>
-  readdirSync(baseDir)
-    .map((dirName: string) => ({ path: join(baseDir, dirName), name: dirName }))
-    .filter(isDirectory);
+const getDirectories = (baseDir: string): Directory[] => {
+  try {
+    return readdirSync(baseDir)
+      .map((dirName: string) => ({
+        path: join(baseDir, dirName),
+        name: dirName
+      }))
+      .filter(isDirectory);
+  } catch (e) {
+    return [];
+  }
+};
 
 function getModulesToChoices(rootDir: string): ModuleChoice[] {
   const modules = getDirectories(rootDir);

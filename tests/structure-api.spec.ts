@@ -4,16 +4,21 @@ import helpers from "yeoman-test";
 describe("yo codibly-ts:structure-api", () => {
   beforeAll(async () => {
     await helpers
-      .run(require("../generators/structure-api"), {
-        resolved: require.resolve("../generators/structure-api/index.js"),
-        namespace: "codibly-ts:structure-api"
+      .run(require("../generators/structure"), {
+        resolved: require.resolve("../generators/structure/index.js"),
+        namespace: "codibly-ts:structure"
       })
-      .withOptions({ module: "User" })
       .withLocalConfig({ rootDir: "tmp" })
-      .withPrompts({ name: "User" });
+      .withPrompts({
+        task: "api",
+        isTaskNameSameAsModule: false,
+        module: "UserDetails",
+        name: "User"
+      });
   });
 
-  const path = "tmp/User/api/User/User";
+  const path = "tmp/UserDetails/api/User/User";
+
   const apiPath = `${path}.api.ts`;
   const dtoPath = `${path}.dto.ts`;
   const mapperPath = `${path}.mapper.ts`;
@@ -27,27 +32,17 @@ describe("yo codibly-ts:structure-api", () => {
     assert.fileContent(apiPath, "namespace UserApi");
   });
 
-  it("imports proper dto in Api", () => {
-    assert.fileContent(apiPath, "import { UserDto } from './User.dto");
-  });
-
   it("creates proper Api interface", () => {
-    assert.fileContent(apiPath, "list(): Promise<UserDto.ListElement[]>");
+    assert.fileContent(apiPath, "list(): Promise<User.Basic[]>");
     assert.fileContent(
       apiPath,
-      "get(entityId: UserDto.Get['id']): Promise<UserDto.Get>"
+      "get(userId: UserDto.Get['id']): Promise<User>"
     );
+    assert.fileContent(apiPath, "create(user: UserDto.Create): Promise<User>");
+    assert.fileContent(apiPath, "update(user: UserDto.Update): Promise<User>");
     assert.fileContent(
       apiPath,
-      "create(entity: UserDto.Create): Promise<UserDto.Get>"
-    );
-    assert.fileContent(
-      apiPath,
-      "update(entity: UserDto.Update): Promise<UserDto.Get>"
-    );
-    assert.fileContent(
-      apiPath,
-      "remove(entityId: UserDto.Get['id']): Promise<UserDto.Get>"
+      "remove(userId: UserDto.Get['id']): Promise<User>"
     );
   });
 
@@ -56,7 +51,7 @@ describe("yo codibly-ts:structure-api", () => {
   });
 
   it("creates proper Dto interface", () => {
-    assert.fileContent(dtoPath, "export type Update = Partial<UserDto.Get>;");
+    assert.fileContent(dtoPath, "export type Update = Partial<Get>;");
   });
 
   it("creates Mapper namespace", () => {
@@ -107,7 +102,7 @@ describe("yo codibly-ts:structure-api", () => {
     );
     assert.fileContent(
       mockPath,
-      " mock.onDelete('/api/user/:id').reply(status);"
+      "mock.onDelete('/api/user/:id').reply(status);"
     );
   });
 });

@@ -35,7 +35,7 @@ export = class StructureComponentGenerator extends Generator {
   private name: string;
   private module: string;
   private answers: FileConfigAnswers;
-  private fileConfig: FileConfig[];
+  private fileConfigs: FileConfig[];
 
   public async prompting() {
     const { name } = await this.prompt(nameQuestion("Component"));
@@ -48,11 +48,11 @@ export = class StructureComponentGenerator extends Generator {
   }
 
   public makeConfig() {
-    this.fileConfig = this.getFileConfig(this.config.getAll() as Config);
+    this.fileConfigs = this.getFileConfig(this.config.getAll() as Config);
   }
 
   public async promptingFromConfig() {
-    const questions = this.fileConfig
+    const questions = this.fileConfigs
       .map(fileConfig => fileConfig.question)
       .filter(question => !!question);
 
@@ -60,7 +60,7 @@ export = class StructureComponentGenerator extends Generator {
   }
 
   public writing() {
-    this.fileConfig.forEach(async fileConfig => {
+    this.fileConfigs.forEach(async fileConfig => {
       this.fs.copyTpl(
         this.templatePath(this.getTemplatePath(fileConfig, this.answers)),
         this.destinationPath(

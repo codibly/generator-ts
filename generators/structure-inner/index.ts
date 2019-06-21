@@ -1,5 +1,4 @@
 import Generator from "yeoman-generator";
-import { TaskLabel } from "../../src/const/TaskLabel";
 import { Task } from "../../src/enum/Task";
 import {
   getModuleQuestion,
@@ -22,14 +21,14 @@ export = class StructureInnerGenerator extends Generator {
     let { module } = await this.prompt(
       getModuleQuestion(
         this.config.get("rootDir"),
-        moduleListMessage(TaskLabel[this.options.task as Task])
+        moduleListMessage(Task.getLabel(this.options.task))
       )
     );
 
     if (isNewModule(module)) {
       const answer = await this.prompt(
         moduleInputQuestion(
-          moduleInputMessage(TaskLabel[this.options.task as Task])
+          moduleInputMessage(Task.getLabel(this.options.task))
         )
       );
       module = answer.module;
@@ -46,9 +45,9 @@ export = class StructureInnerGenerator extends Generator {
     const { isTaskNameSameAsModule } = await this.prompt({
       type: "expand",
       name: "isTaskNameSameAsModule",
-      message: `Is the ${
-        TaskLabel[this.options.task as Task]
-      } name the same as the Module name?`,
+      message: `Is the ${Task.getLabel(
+        this.options.task
+      )} name the same as the Module name?`,
       choices: [
         {
           key: "y",

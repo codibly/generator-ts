@@ -8,5 +8,5 @@ export namespace <%= name %> {
 }
 
 export const <%= name %>: FC<<%= name %>.Props> = (props) => {
-  return ( );
+  return null;
 };

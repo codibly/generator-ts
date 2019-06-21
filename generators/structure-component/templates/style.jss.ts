@@ -1,5 +1,3 @@
 import styled from 'jss';
 
-export const Styled = styled.div({
-
-});
+export const Styled = styled.div``;

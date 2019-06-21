@@ -1,22 +1,18 @@
 
 export namespace <%= name %>Dto {
 
-  type Identifier = { id: string };
+  type Id = { id: string };
 
-  type Basic = {
+  export type Base = Id & { };
 
-  };
+  export type ListElement = Base;
 
-  export type ListElement = Identifier & Basic;
+  export type List = { data: ListElement[] }
 
-  export interface ListMeta { pagination: { index: number, size: number, count: number }}
+  export type Get = Base & { };
 
-  export interface List { data: ListElement[], meta: ListMeta }
+  export type Create = Base;
 
-  export type Get = Identifier & Basic & { };
-
-  export type Create = Basic;
-
-  export type Update = Partial<<%= name %>Dto.Get>;
+  export type Update = Partial<Get>;
 
 }
