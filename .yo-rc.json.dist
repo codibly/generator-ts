@@ -1,0 +1,6 @@
+{
+  "generator-codibly-ts": {
+    "rootDir": "src",
+    "styling": "jss" | "emotion" | "styled-components"
+  }
+}

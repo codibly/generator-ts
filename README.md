@@ -11,12 +11,12 @@
 
 ## Installation
 
-We assume that you already have installed:
+##### Prerequisites
 
 - [`yarn`](https://yarnpkg.com/) _- it's our default package manager_
 - [`yeoman`](https://yeoman.io/) (`yarn global add yo`)
 
-Then you can install this generator:
+##### Installation command
 
 ```
 yarn global add generator-codibly-ts
@@ -28,6 +28,51 @@ And that's it - you are ready to generate ✨
 
 To generate something use `yo codibly-ts` command - it will guide you through the
 generation process.
+
+There four types of frames you can generate
+
+- **Structure** creates choosen part of an app structure according to Codibly guidelines
+- **Library**
+- **Application**
+- **Configuration**
+
+## Structure
+
+To generate part of an app structure according to Codibly guidelines run
+
+`yo codibly-ts:strucutre`
+
+Always run Structure generator from the main project directory.
+
+You will be asked to choose one of four parts of the structure
+
+- **Module** creates structure for business model - generates **API** and **Model** structures under given **Module** name
+- **API** creates `APIStrucutre` with given structure name
+- **Component** creates `ComponentStrucutre` with given structure name
+- **Model** creates `ModelStrucutre` with given structure name🚧
+- **Store** under construction
+
+## Config
+
+You can customize the generator output by creating `.yo-rc.json` file in your project. and setting up its values.
+
+Important thing is to put `"generator-codibly-ts"` field into this file.
+Under this key you can put the following fields:
+
+| field   |                          value                          |
+| ------- | :-----------------------------------------------------: |
+| rootDir |                        `string`                         |
+| styling | `'jss'` &#124; `'styled-components'` &#124; `'emotion'` |
+
+Example config
+
+```
+{
+  "generator-codibly-ts": {
+    "styling": "emotion"
+  }
+}
+```
 
 ## License
 
