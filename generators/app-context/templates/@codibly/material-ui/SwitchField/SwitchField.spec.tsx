@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { render } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
+import { render } from '@testing-library/react';
+import '@testing-library/react/cleanup-after-each';
 import { SwitchField } from './SwitchField';
 
 // tslint:disable:no-duplicate-string

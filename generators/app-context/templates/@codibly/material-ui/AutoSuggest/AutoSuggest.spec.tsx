@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { ComponentType } from 'react';
-import { fireEvent } from 'react-testing-library';
+import { fireEvent } from '@testing-library/react';
 import { renderInApp } from '../../../App/test/renderInApp';
 import { AsyncAutoSuggest } from '../AsyncAutoSuggest';
 import { AutoSuggest } from './AutoSuggest';

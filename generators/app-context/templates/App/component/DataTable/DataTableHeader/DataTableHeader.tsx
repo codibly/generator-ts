@@ -81,17 +81,19 @@ export const DataTableHeader: FunctionComponent<DataTableHeader.Props> = ({
           )}
           {column.filter && (
             <Tooltip title={`Filter by ${column.label}`} placement="bottom-start" enterDelay={300}>
-              <DataTableFilterPopper
-                schema={column.filter}
-                value={(filters || {})[column.key]}
-                onChange={(columnFilters) =>
-                  onChangeFilters &&
-                  onChangeFilters({
-                    ...(filters || {}),
-                    [column.key]: columnFilters
-                  })
-                }
-              />
+              <div>
+                <DataTableFilterPopper
+                  schema={column.filter}
+                  value={(filters || {})[column.key]}
+                  onChange={(columnFilters) =>
+                    onChangeFilters &&
+                    onChangeFilters({
+                      ...(filters || {}),
+                      [column.key]: columnFilters
+                    })
+                  }
+                />
+              </div>
             </Tooltip>
           )}
         </HeaderColumnCell>

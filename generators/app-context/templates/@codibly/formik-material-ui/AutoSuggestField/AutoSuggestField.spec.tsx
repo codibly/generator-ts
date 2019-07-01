@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import * as React from 'react';
-import { fireEvent } from 'react-testing-library';
+import { fireEvent } from '@testing-library/react';
 import { renderInApp } from '../../../App/test/renderInApp';
 import { tick } from '../../../App/test/util/tick';
 import { AutoSuggest } from '../../material-ui/AutoSuggest';

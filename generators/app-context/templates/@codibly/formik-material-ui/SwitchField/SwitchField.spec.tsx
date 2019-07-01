@@ -1,7 +1,7 @@
 import { Form, Formik, FormikActions } from 'formik';
 import * as React from 'react';
-import { fireEvent, render, RenderResult } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
+import '@testing-library/react/cleanup-after-each';
 import { tick } from '../../../App/test/util/tick';
 import { SwitchField } from './SwitchField';
 

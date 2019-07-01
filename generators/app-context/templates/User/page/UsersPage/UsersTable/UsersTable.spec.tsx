@@ -1,6 +1,6 @@
 import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
 import * as React from 'react';
-import 'react-testing-library/cleanup-after-each';
+import '@testing-library/react/cleanup-after-each';
 import { Pagination } from '../../../../Api/model/Pagination';
 import { UserApiMock } from '../../../api/User/User.mock';
 import { UserMapper } from '../../../api/User/User.mapper';
@@ -47,9 +47,6 @@ describe('Users Table', () => {
 
   it('should list users in table', async () => {
     expect(rendered.getByText('Robert DeFoe')).toBeTruthy();
-    expect(rendered.getByText('BFL Canada')).toBeTruthy();
     expect(rendered.getByText('admin@example.com')).toBeTruthy();
-    expect(rendered.getByText('01 Feb 2019')).toBeTruthy();
-    expect(rendered.getByText('Enabled')).toBeTruthy();
   });
 });

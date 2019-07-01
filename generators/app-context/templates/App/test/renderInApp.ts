@@ -1,8 +1,8 @@
-import * as muiQueries from '@codibly/material-ui-testing/query';
+import * as muiQueries from '@codibly/material-ui-testing';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 import { ReactElement } from 'react';
 import { applyMiddleware, createStore, Store, StoreEnhancer } from 'redux';
 import { createDetectorEnhancer, DetectableStore } from 'redux-detector';

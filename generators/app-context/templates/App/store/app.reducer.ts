@@ -6,6 +6,7 @@ import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
 import { AppState } from './App.state';
+import {userReducer} from "User/store/User/user.reducer";
 
 export function createAppReducer(history: History) {
   return combineReducers<AppState>({
@@ -13,6 +14,7 @@ export function createAppReducer(history: History) {
     async: asyncReducer,
     snackbar: snackbarReducer,
     auth: authReducer,
-    dialog: dialogReducer
+    dialog: dialogReducer,
+    user: userReducer
   });
 }

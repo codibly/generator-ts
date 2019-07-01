@@ -2,7 +2,6 @@
 
 exports[`Pill should render a pill 1`] = `
 .emotion-0 {
-  color: #5F5F5F;
   font-family: "Roboto","Helvetica","Arial",sans-serif;
   font-weight: 400;
   font-size: 0.75rem;

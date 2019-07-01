@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { fireEvent, render } from 'react-testing-library';
+import { fireEvent, render } from '@testing-library/react';
 import { waitForSubmission } from '../../test/util/waitForSubmission';
 import { SubmitButton } from './SubmitButton';
 

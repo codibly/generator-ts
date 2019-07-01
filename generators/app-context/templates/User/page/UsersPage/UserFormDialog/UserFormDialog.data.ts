@@ -1,5 +1,5 @@
 import { composeValidators, isRequired } from 'revalidate';
-import { combineValidators } from '../../../../@codibly/revalidate-formik';
+import { combineValidators } from '@codibly/revalidate-formik';
 import { isEmail } from '@codibly/validator/isEmail';
 import { UserDto } from '../../../api/User/User.dto';
 import { UserMapper } from '../../../api/User/User.mapper';

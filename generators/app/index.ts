@@ -1,8 +1,13 @@
 import Generator from "yeoman-generator";
+import { defaultConfig } from "../../src/defaultConfig";
 import traits from "../../traits";
 
 export = class AppGenerator extends Generator {
   public traits = traits(this);
+
+  public async settingDefaultConfig() {
+    this.config.defaults(defaultConfig);
+  }
 
   public initializing() {
     this.composeWith(require.resolve("../package"), {});
@@ -14,6 +19,7 @@ export = class AppGenerator extends Generator {
     this.composeWith(require.resolve("../config-webpack"), {});
     this.composeWith(require.resolve("../config-react"), {});
     this.composeWith(require.resolve("../config-storybook"), {});
+    this.composeWith(require.resolve("../app-context"), {});
   }
 
   public install() {

@@ -1,9 +1,9 @@
 import { Omit } from '@material-ui/core';
 import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import * as React from 'react';
-import { ComponentClass, FunctionComponent, useEffect } from 'react';
+import { FunctionComponent } from 'react';
 import ErrorBoundary from 'react-error-boundary';
-import { connect } from 'react-redux';
+import { connect, ConnectedComponentClass } from 'react-redux';
 import { AppState } from '../../store/App.state';
 import { DialogAction } from '@codibly/redux-dialog/Dialog.action';
 import { DialogSelector } from '@codibly/redux-dialog/Dialog.selector';
@@ -55,7 +55,7 @@ export const ConnectedDialogPure: FunctionComponent<ConnectedDialog.Props> = ({
   </Dialog>
 );
 
-export const ConnectedDialog: ComponentClass<ConnectedDialog.OwnProps> = connect(
+export const ConnectedDialog: ConnectedComponentClass<any, ConnectedDialog.OwnProps> = connect(
   (state: AppState, ownProps: ConnectedDialog.OwnProps): ConnectedDialog.StateProps => ({
     open: DialogSelector.isDialogOpen(ownProps.name)(state),
     params: DialogSelector.getDialogParams(ownProps.name)(state)

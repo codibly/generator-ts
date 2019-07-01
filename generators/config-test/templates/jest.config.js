@@ -3,7 +3,7 @@ module.exports = {
   rootDir: '.',
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/src/**/?(*.)+(spec|test).ts?(x)'],
-  setupTestFrameworkScriptFile: '<rootDir>/src/App/test/setupTests.ts',
+  setupFilesAfterEnv: ['<rootDir>/src/App/test/setupTests.ts'],
   modulePaths: ['<rootDir>/src'],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/src/App/test/mock/fileMock.ts'

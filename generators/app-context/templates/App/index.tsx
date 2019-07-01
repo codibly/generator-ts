@@ -8,7 +8,7 @@ if (isProduction()) {
 }
 
 import { AppRouter } from 'App/router/App.router';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createContext } from './createContext';

@@ -33,12 +33,12 @@ exports[`<ComponentLoader /> should render error page and retry button on error 
   class="emotion-1"
 >
   <h6
-    class="MuiTypography-root-57 MuiTypography-h6-74"
+    class="MuiTypography-root MuiTypography-h6"
   >
     Loading error
   </h6>
   <h6
-    class="MuiTypography-root-57 MuiTypography-subtitle2-76"
+    class="MuiTypography-root MuiTypography-subtitle2"
   >
     An error occurred during the application loading and this view could not be displayed. Please, try to 
     <span
@@ -72,16 +72,16 @@ exports[`<ComponentLoader /> should render loader after delay pass 1`] = `
   class="emotion-0"
 >
   <div
-    class="MuiCircularProgress-root-1 MuiCircularProgress-colorPrimary-4 MuiCircularProgress-indeterminate-3"
+    class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
     role="progressbar"
     style="width: 40px; height: 40px;"
   >
     <svg
-      class="MuiCircularProgress-svg-6"
+      class="MuiCircularProgress-svg"
       viewBox="22 22 44 44"
     >
       <circle
-        class="MuiCircularProgress-circle-7 MuiCircularProgress-circleIndeterminate-9"
+        class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
         cx="44"
         cy="44"
         fill="none"
@@ -122,16 +122,16 @@ exports[`<ComponentLoader /> should render taking too long after timeout pass 1`
   class="emotion-1"
 >
   <div
-    class="MuiCircularProgress-root-11 MuiCircularProgress-colorSecondary-15 MuiCircularProgress-indeterminate-13"
+    class="MuiCircularProgress-root MuiCircularProgress-colorSecondary MuiCircularProgress-indeterminate"
     role="progressbar"
     style="width: 40px; height: 40px;"
   >
     <svg
-      class="MuiCircularProgress-svg-16"
+      class="MuiCircularProgress-svg"
       viewBox="22 22 44 44"
     >
       <circle
-        class="MuiCircularProgress-circle-17 MuiCircularProgress-circleIndeterminate-19"
+        class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
         cx="44"
         cy="44"
         fill="none"
@@ -141,7 +141,7 @@ exports[`<ComponentLoader /> should render taking too long after timeout pass 1`
     </svg>
   </div>
   <p
-    class="MuiTypography-root-21 MuiTypography-body1-30 emotion-0"
+    class="MuiTypography-root emotion-0 MuiTypography-body1"
   >
     Taking a long time...
   </p>

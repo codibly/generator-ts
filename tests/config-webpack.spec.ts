@@ -10,12 +10,7 @@ describe("yo codibly-ts:config-webpack", () => {
   });
 
   it("generates required files", () => {
-    assert.file([
-      "package.json",
-      "webpack.config.js",
-      "src/index.html",
-      "src/index.tsx"
-    ]);
+    assert.file(["webpack.config.js"]);
   });
 
   it("extends package.json", () => {

@@ -24,10 +24,6 @@ describe("yo codibly-ts:config-test", () => {
         "jest-haste-map": "^24.4.0",
         "jest-resolve": "^24.4.0",
         "ts-jest": "^24.0.0"
-      },
-      jest: {
-        preset: "ts-jest",
-        testEnvironment: "jsdom"
       }
     });
   });

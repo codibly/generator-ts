@@ -7,7 +7,7 @@ import '@testing-library/react/cleanup-after-each';
 // add mocks
 import './mock/createObjectURLMock';
 import './mock/documentRangeMock';
-import './mock/environemntMock';
+import './mock/environmentMock';
 import './mock/windowLocationMock';
 
 // increase timeout in case of expensive UI tests

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from 'react-testing-library';
+import { fireEvent, render } from '@testing-library/react';
 import { muteErrors, unmuteErrors } from '../../../@codibly/mute-errors';
 import { renderInApp } from '../../test/renderInApp';
 import { tick } from '../../test/util/tick';

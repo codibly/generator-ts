@@ -2,47 +2,47 @@
 
 exports[`AsyncButton should render in default state 1`] = `
 <button
-  class="MuiButtonBase-root-27 MuiButton-root-1 MuiButton-text-3 MuiButton-flat-6"
+  class="MuiButtonBase-root MuiButton-root MuiButton-text"
   tabindex="0"
   type="button"
 >
   <span
-    class="MuiButton-label-2"
+    class="MuiButton-label"
   >
     Test button
   </span>
   <span
-    class="MuiTouchRipple-root-30"
+    class="MuiTouchRipple-root"
   />
 </button>
 `;
 
 exports[`AsyncButton should render in pending: false, disabled: false state 1`] = `
 <button
-  class="MuiButtonBase-root-63 MuiButton-root-37 MuiButton-text-39 MuiButton-flat-42"
+  class="MuiButtonBase-root MuiButton-root MuiButton-text"
   tabindex="0"
   type="button"
 >
   <span
-    class="MuiButton-label-38"
+    class="MuiButton-label"
   >
     Test button
   </span>
   <span
-    class="MuiTouchRipple-root-66"
+    class="MuiTouchRipple-root"
   />
 </button>
 `;
 
 exports[`AsyncButton should render in pending: false, disabled: true state 1`] = `
 <button
-  class="MuiButtonBase-root-99 MuiButtonBase-disabled-100 MuiButton-root-73 MuiButton-text-75 MuiButton-flat-78 MuiButton-disabled-93"
+  class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
   disabled=""
   tabindex="-1"
   type="button"
 >
   <span
-    class="MuiButton-label-74"
+    class="MuiButton-label"
   >
     Test button
   </span>
@@ -55,25 +55,25 @@ exports[`AsyncButton should render in pending: true, disabled: false state 1`] =
 }
 
 <button
-  class="MuiButtonBase-root-128 MuiButtonBase-disabled-129 MuiButton-root-102 MuiButton-text-104 MuiButton-flat-107 MuiButton-disabled-122"
+  class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
   disabled=""
   tabindex="-1"
   type="button"
 >
   <span
-    class="MuiButton-label-103"
+    class="MuiButton-label"
   >
     <div
-      class="MuiCircularProgress-root-131 MuiCircularProgress-colorPrimary-134 MuiCircularProgress-indeterminate-133 emotion-0"
+      class="MuiCircularProgress-root emotion-0 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
       role="progressbar"
       style="width: 24px; height: 24px;"
     >
       <svg
-        class="MuiCircularProgress-svg-136"
+        class="MuiCircularProgress-svg"
         viewBox="22 22 44 44"
       >
         <circle
-          class="MuiCircularProgress-circle-137 MuiCircularProgress-circleIndeterminate-139"
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
           cx="44"
           cy="44"
           fill="none"
@@ -93,25 +93,25 @@ exports[`AsyncButton should render in pending: true, disabled: true state 1`] = 
 }
 
 <button
-  class="MuiButtonBase-root-167 MuiButtonBase-disabled-168 MuiButton-root-141 MuiButton-text-143 MuiButton-flat-146 MuiButton-disabled-161"
+  class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
   disabled=""
   tabindex="-1"
   type="button"
 >
   <span
-    class="MuiButton-label-142"
+    class="MuiButton-label"
   >
     <div
-      class="MuiCircularProgress-root-170 MuiCircularProgress-colorPrimary-173 MuiCircularProgress-indeterminate-172 emotion-0"
+      class="MuiCircularProgress-root emotion-0 MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
       role="progressbar"
       style="width: 24px; height: 24px;"
     >
       <svg
-        class="MuiCircularProgress-svg-175"
+        class="MuiCircularProgress-svg"
         viewBox="22 22 44 44"
       >
         <circle
-          class="MuiCircularProgress-circle-176 MuiCircularProgress-circleIndeterminate-178"
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
           cx="44"
           cy="44"
           fill="none"

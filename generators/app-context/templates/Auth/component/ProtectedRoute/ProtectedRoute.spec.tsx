@@ -1,5 +1,5 @@
 import { History } from 'history';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 import * as React from 'react';
 import { ReactElement } from 'react';
 import { Route, Router, Switch } from 'react-router';
