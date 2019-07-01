@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ComponentLoader /> should render error page and retry button on error 1`] = `
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.emotion-0 {
+  color: #74A1BE;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+<section
+  class="emotion-1"
+>
+  <h6
+    class="MuiTypography-root-57 MuiTypography-h6-74"
+  >
+    Loading error
+  </h6>
+  <h6
+    class="MuiTypography-root-57 MuiTypography-subtitle2-76"
+  >
+    An error occurred during the application loading and this view could not be displayed. Please, try to 
+    <span
+      class="emotion-0"
+    >
+      reload this view
+    </span>
+  </h6>
+</section>
+`;
+
+exports[`<ComponentLoader /> should render loader after delay pass 1`] = `
+.emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+<div
+  class="emotion-0"
+>
+  <div
+    class="MuiCircularProgress-root-1 MuiCircularProgress-colorPrimary-4 MuiCircularProgress-indeterminate-3"
+    role="progressbar"
+    style="width: 40px; height: 40px;"
+  >
+    <svg
+      class="MuiCircularProgress-svg-6"
+      viewBox="22 22 44 44"
+    >
+      <circle
+        class="MuiCircularProgress-circle-7 MuiCircularProgress-circleIndeterminate-9"
+        cx="44"
+        cy="44"
+        fill="none"
+        r="20.2"
+        stroke-width="3.6"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`<ComponentLoader /> should render nothing before delay pass 1`] = `null`;
+
+exports[`<ComponentLoader /> should render taking too long after timeout pass 1`] = `
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.emotion-0 {
+  display: inline-block;
+  padding: 1em;
+}
+
+<div
+  class="emotion-1"
+>
+  <div
+    class="MuiCircularProgress-root-11 MuiCircularProgress-colorSecondary-15 MuiCircularProgress-indeterminate-13"
+    role="progressbar"
+    style="width: 40px; height: 40px;"
+  >
+    <svg
+      class="MuiCircularProgress-svg-16"
+      viewBox="22 22 44 44"
+    >
+      <circle
+        class="MuiCircularProgress-circle-17 MuiCircularProgress-circleIndeterminate-19"
+        cx="44"
+        cy="44"
+        fill="none"
+        r="20.2"
+        stroke-width="3.6"
+      />
+    </svg>
+  </div>
+  <p
+    class="MuiTypography-root-21 MuiTypography-body1-30 emotion-0"
+  >
+    Taking a long time...
+  </p>
+</div>
+`;

@@ -1,0 +1,1 @@
+export type FilterDto = string;

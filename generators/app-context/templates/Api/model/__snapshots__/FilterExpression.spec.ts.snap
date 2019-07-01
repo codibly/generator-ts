@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterExpression should create "and" expression for multi input 1`] = `
+Object {
+  "and": Array [
+    Object {
+      "eq": Array [
+        Object {
+          "identifier": "field",
+        },
+        Object {
+          "literal": "test",
+        },
+      ],
+    },
+    Object {
+      "eq": Array [
+        Object {
+          "identifier": "field",
+        },
+        Object {
+          "literal": "abc",
+        },
+      ],
+    },
+    Object {
+      "like": Array [
+        Object {
+          "identifier": "field",
+        },
+        Object {
+          "literal": "%efg%",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "and" expression for single input 1`] = `
+Object {
+  "eq": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "test",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "eq" expression 1`] = `
+Object {
+  "eq": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "test",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "in" expression 1`] = `
+Object {
+  "in": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": Array [
+        "a",
+        "b",
+        "c",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "like" expression for "CONTAINS" mode 1`] = `
+Object {
+  "like": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "%test%",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "like" expression for "ENDS_WITH" mode 1`] = `
+Object {
+  "like": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "%test",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "like" expression for "EQUALS" mode 1`] = `
+Object {
+  "like": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "test",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "like" expression for "STARTS_WITH" mode 1`] = `
+Object {
+  "like": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "test%",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "or" expression for multi input 1`] = `
+Object {
+  "or": Array [
+    Object {
+      "eq": Array [
+        Object {
+          "identifier": "field",
+        },
+        Object {
+          "literal": "test",
+        },
+      ],
+    },
+    Object {
+      "eq": Array [
+        Object {
+          "identifier": "field",
+        },
+        Object {
+          "literal": "abc",
+        },
+      ],
+    },
+    Object {
+      "like": Array [
+        Object {
+          "identifier": "field",
+        },
+        Object {
+          "literal": "%efg%",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create "or" expression for single input 1`] = `
+Object {
+  "eq": Array [
+    Object {
+      "identifier": "field",
+    },
+    Object {
+      "literal": "test",
+    },
+  ],
+}
+`;
+
+exports[`FilterExpression should create like literal for mode "CONTAINS" 1`] = `"%test%"`;
+
+exports[`FilterExpression should create like literal for mode "ENDS_WITH" 1`] = `"%test"`;
+
+exports[`FilterExpression should create like literal for mode "EQUALS" 1`] = `"test"`;
+
+exports[`FilterExpression should create like literal for mode "STARTS_WITH" 1`] = `"test%"`;

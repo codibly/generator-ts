@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AsyncButton should render in default state 1`] = `
+<button
+  class="MuiButtonBase-root-27 MuiButton-root-1 MuiButton-text-3 MuiButton-flat-6"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label-2"
+  >
+    Test button
+  </span>
+  <span
+    class="MuiTouchRipple-root-30"
+  />
+</button>
+`;
+
+exports[`AsyncButton should render in pending: false, disabled: false state 1`] = `
+<button
+  class="MuiButtonBase-root-63 MuiButton-root-37 MuiButton-text-39 MuiButton-flat-42"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label-38"
+  >
+    Test button
+  </span>
+  <span
+    class="MuiTouchRipple-root-66"
+  />
+</button>
+`;
+
+exports[`AsyncButton should render in pending: false, disabled: true state 1`] = `
+<button
+  class="MuiButtonBase-root-99 MuiButtonBase-disabled-100 MuiButton-root-73 MuiButton-text-75 MuiButton-flat-78 MuiButton-disabled-93"
+  disabled=""
+  tabindex="-1"
+  type="button"
+>
+  <span
+    class="MuiButton-label-74"
+  >
+    Test button
+  </span>
+</button>
+`;
+
+exports[`AsyncButton should render in pending: true, disabled: false state 1`] = `
+.emotion-0 {
+  position: absolute;
+}
+
+<button
+  class="MuiButtonBase-root-128 MuiButtonBase-disabled-129 MuiButton-root-102 MuiButton-text-104 MuiButton-flat-107 MuiButton-disabled-122"
+  disabled=""
+  tabindex="-1"
+  type="button"
+>
+  <span
+    class="MuiButton-label-103"
+  >
+    <div
+      class="MuiCircularProgress-root-131 MuiCircularProgress-colorPrimary-134 MuiCircularProgress-indeterminate-133 emotion-0"
+      role="progressbar"
+      style="width: 24px; height: 24px;"
+    >
+      <svg
+        class="MuiCircularProgress-svg-136"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle-137 MuiCircularProgress-circleIndeterminate-139"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+    Test button
+  </span>
+</button>
+`;
+
+exports[`AsyncButton should render in pending: true, disabled: true state 1`] = `
+.emotion-0 {
+  position: absolute;
+}
+
+<button
+  class="MuiButtonBase-root-167 MuiButtonBase-disabled-168 MuiButton-root-141 MuiButton-text-143 MuiButton-flat-146 MuiButton-disabled-161"
+  disabled=""
+  tabindex="-1"
+  type="button"
+>
+  <span
+    class="MuiButton-label-142"
+  >
+    <div
+      class="MuiCircularProgress-root-170 MuiCircularProgress-colorPrimary-173 MuiCircularProgress-indeterminate-172 emotion-0"
+      role="progressbar"
+      style="width: 24px; height: 24px;"
+    >
+      <svg
+        class="MuiCircularProgress-svg-175"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle-176 MuiCircularProgress-circleIndeterminate-178"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </div>
+    Test button
+  </span>
+</button>
+`;

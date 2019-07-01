@@ -1,0 +1,855 @@
+/** @license MIT License (c) 2011-2013 Copyright Tavendo GmbH. */
+// tslint:disable
+/**
+ * AutobahnJS - http://autobahn.ws
+ *
+ * A lightweight implementation of
+ *
+ *   WAMP (The WebSocket Application Messaging Protocol) - http://wamp.ws
+ *
+ * Provides asynchronous RPC/PubSub over WebSocket.
+ *
+ * Copyright (C) 2011-2014 Tavendo GmbH. Licensed under the MIT License.
+ * See license text at http://www.opensource.org/licenses/mit-license.php
+ */
+
+/* global console: false, MozWebSocket: false, when: false, CryptoJS: false */
+
+/**
+ * @define {string}
+ */
+var AUTOBAHNJS_VERSION = '0.8.2';
+
+module.exports = (function() {
+  'use strict';
+
+  var ab = {};
+  ab._version = AUTOBAHNJS_VERSION;
+
+  // Logging message for unsupported browser.
+  ab.browserNotSupportedMessage = 'Browser does not support WebSockets (RFC6455)';
+
+  // PBKDF2-base key derivation function for salted WAMP-CRA
+  ab.deriveKey = function(secret, extra) {
+    if (extra && extra.salt) {
+      var salt = extra.salt;
+      var keylen = extra.keylen || 32;
+      var iterations = extra.iterations || 10000;
+      var key = CryptoJS.PBKDF2(secret, salt, {
+        keySize: keylen / 4,
+        iterations: iterations,
+        hasher: CryptoJS.algo.SHA256
+      });
+      return key.toString(CryptoJS.enc.Base64);
+    } else {
+      return secret;
+    }
+  };
+
+  ab._idchars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  ab._idlen = 16;
+  ab._subprotocol = 'wamp';
+
+  ab._newid = function() {
+    var id = '';
+    for (var i = 0; i < ab._idlen; i += 1) {
+      id += ab._idchars.charAt(Math.floor(Math.random() * ab._idchars.length));
+    }
+    return id;
+  };
+
+  ab._newidFast = function() {
+    return Math.random().toString(36);
+  };
+
+  ab.log = function() {
+    //console.log.apply(console, !!arguments.length ? arguments : [this]);
+    if (arguments.length > 1) {
+      console.group('Log Item');
+      for (var i = 0; i < arguments.length; i += 1) {
+        console.log(arguments[i]);
+      }
+      console.groupEnd();
+    } else {
+      console.log(arguments[0]);
+    }
+  };
+
+  ab._debugrpc = false;
+  ab._debugpubsub = false;
+  ab._debugws = false;
+  ab._debugconnect = false;
+
+  ab.debug = function(debugWamp, debugWs, debugConnect) {
+    if ('console' in window) {
+      ab._debugrpc = debugWamp;
+      ab._debugpubsub = debugWamp;
+      ab._debugws = debugWs;
+      ab._debugconnect = debugConnect;
+    } else {
+      throw 'browser does not support console object';
+    }
+  };
+
+  ab.version = function() {
+    return ab._version;
+  };
+
+  ab.PrefixMap = function() {
+    var self = this;
+    self._index = {};
+    self._rindex = {};
+  };
+
+  ab.PrefixMap.prototype.get = function(prefix) {
+    var self = this;
+    return self._index[prefix];
+  };
+
+  ab.PrefixMap.prototype.set = function(prefix, uri) {
+    var self = this;
+    self._index[prefix] = uri;
+    self._rindex[uri] = prefix;
+  };
+
+  ab.PrefixMap.prototype.setDefault = function(uri) {
+    var self = this;
+    self._index[''] = uri;
+    self._rindex[uri] = '';
+  };
+
+  ab.PrefixMap.prototype.remove = function(prefix) {
+    var self = this;
+    var uri = self._index[prefix];
+    if (uri) {
+      delete self._index[prefix];
+      delete self._rindex[uri];
+    }
+  };
+
+  ab.PrefixMap.prototype.resolve = function(curie, pass) {
+    var self = this;
+
+    // skip if not a CURIE
+    var i = curie.indexOf(':');
+    if (i >= 0) {
+      var prefix = curie.substring(0, i);
+      if (self._index[prefix]) {
+        return self._index[prefix] + curie.substring(i + 1);
+      }
+    }
+
+    // either pass-through or null
+    if (pass === true) {
+      return curie;
+    } else {
+      return null;
+    }
+  };
+
+  ab.PrefixMap.prototype.shrink = function(uri, pass) {
+    var self = this;
+
+    for (var i = uri.length; i > 0; i -= 1) {
+      var u = uri.substring(0, i);
+      var p = self._rindex[u];
+      if (p) {
+        return p + ':' + uri.substring(i);
+      }
+    }
+
+    // either pass-through or null
+    if (pass === true) {
+      return uri;
+    } else {
+      return null;
+    }
+  };
+
+  ab._MESSAGE_TYPEID_WELCOME = 0;
+  ab._MESSAGE_TYPEID_PREFIX = 1;
+  ab._MESSAGE_TYPEID_CALL = 2;
+  ab._MESSAGE_TYPEID_CALL_RESULT = 3;
+  ab._MESSAGE_TYPEID_CALL_ERROR = 4;
+  ab._MESSAGE_TYPEID_SUBSCRIBE = 5;
+  ab._MESSAGE_TYPEID_UNSUBSCRIBE = 6;
+  ab._MESSAGE_TYPEID_PUBLISH = 7;
+  ab._MESSAGE_TYPEID_EVENT = 8;
+
+  ab.CONNECTION_CLOSED = 0;
+  ab.CONNECTION_LOST = 1;
+  ab.CONNECTION_RETRIES_EXCEEDED = 2;
+  ab.CONNECTION_UNREACHABLE = 3;
+  ab.CONNECTION_UNSUPPORTED = 4;
+  ab.CONNECTION_UNREACHABLE_SCHEDULED_RECONNECT = 5;
+  ab.CONNECTION_LOST_SCHEDULED_RECONNECT = 6;
+
+  ab._construct = function(url, protocols) {
+    if ('WebSocket' in window) {
+      // Chrome, MSIE, newer Firefox
+      if (protocols) {
+        return new WebSocket(url, protocols);
+      } else {
+        return new WebSocket(url);
+      }
+    } else if ('MozWebSocket' in window) {
+      // older versions of Firefox prefix the WebSocket object
+      if (protocols) {
+        return new MozWebSocket(url, protocols);
+      } else {
+        return new MozWebSocket(url);
+      }
+    } else {
+      return null;
+    }
+  };
+
+  ab.Session = function(wsuri, onopen, onclose, options, onconnect) {
+    var self = this;
+
+    self._wsuri = wsuri;
+    self._options = options;
+    self._websocket_onopen = onopen;
+    self._websocket_onclose = onclose;
+    self._websocket = null;
+
+    // added by codibly
+    self._websocket_onconnect = onconnect;
+    self._websocket_connected = false;
+
+    self._session_id = null;
+    self._wamp_version = null;
+    self._server = null;
+
+    self._calls = {};
+    self._subscriptions = {};
+    self._prefixes = new ab.PrefixMap();
+
+    self._txcnt = 0;
+    self._rxcnt = 0;
+
+    if (self._options && self._options.skipSubprotocolAnnounce) {
+      self._websocket = ab._construct(self._wsuri);
+    } else {
+      self._websocket = ab._construct(self._wsuri, [ab._subprotocol]);
+    }
+
+    if (!self._websocket) {
+      if (onclose !== undefined) {
+        onclose(ab.CONNECTION_UNSUPPORTED);
+        return;
+      } else {
+        throw ab.browserNotSupportedMessage;
+      }
+    }
+
+    self._websocket.onmessage = function(e) {
+      if (ab._debugws) {
+        self._rxcnt += 1;
+        console.group('WS Receive');
+        console.info(self._wsuri + '  [' + self._session_id + ']');
+        console.log(self._rxcnt);
+        console.log(e.data);
+        console.groupEnd();
+      }
+
+      var o = JSON.parse(e.data);
+      if (o[1] in self._calls) {
+        if (o[0] === ab._MESSAGE_TYPEID_CALL_RESULT) {
+          var dr = self._calls[o[1]];
+          var r = o[2];
+
+          if (ab._debugrpc && dr._ab_callobj !== undefined) {
+            console.group('WAMP Call', dr._ab_callobj[2]);
+            console.timeEnd(dr._ab_tid);
+            console.group('Arguments');
+            for (var i = 3; i < dr._ab_callobj.length; i += 1) {
+              var arg = dr._ab_callobj[i];
+              if (arg !== undefined) {
+                console.log(arg);
+              } else {
+                break;
+              }
+            }
+            console.groupEnd();
+            console.group('Result');
+            console.log(r);
+            console.groupEnd();
+            console.groupEnd();
+          }
+
+          dr.resolve(r);
+        } else if (o[0] === ab._MESSAGE_TYPEID_CALL_ERROR) {
+          var de = self._calls[o[1]];
+          var uri_ = o[2];
+          var desc_ = o[3];
+          var detail_ = o[4];
+
+          if (ab._debugrpc && de._ab_callobj !== undefined) {
+            console.group('WAMP Call', de._ab_callobj[2]);
+            console.timeEnd(de._ab_tid);
+            console.group('Arguments');
+            for (var j = 3; j < de._ab_callobj.length; j += 1) {
+              var arg2 = de._ab_callobj[j];
+              if (arg2 !== undefined) {
+                console.log(arg2);
+              } else {
+                break;
+              }
+            }
+            console.groupEnd();
+            console.group('Error');
+            console.log(uri_);
+            console.log(desc_);
+            if (detail_ !== undefined) {
+              console.log(detail_);
+            }
+            console.groupEnd();
+            console.groupEnd();
+          }
+
+          if (detail_ !== undefined) {
+            de.reject({ uri: uri_, desc: desc_, detail: detail_ });
+          } else {
+            de.reject({ uri: uri_, desc: desc_ });
+          }
+        }
+        delete self._calls[o[1]];
+      } else if (o[0] === ab._MESSAGE_TYPEID_EVENT) {
+        var subid = self._prefixes.resolve(o[1], true);
+        if (subid in self._subscriptions) {
+          var uri2 = o[1];
+          var val = o[2];
+
+          if (ab._debugpubsub) {
+            console.group('WAMP Event');
+            console.info(self._wsuri + '  [' + self._session_id + ']');
+            console.log(uri2);
+            console.log(val);
+            console.groupEnd();
+          }
+
+          self._subscriptions[subid].forEach(function(callback) {
+            callback(uri2, val);
+          });
+        } else {
+          // ignore unsolicited event!
+        }
+      } else if (o[0] === ab._MESSAGE_TYPEID_WELCOME) {
+        if (self._session_id === null) {
+          self._session_id = o[1];
+          self._wamp_version = o[2];
+          self._server = o[3];
+
+          if (ab._debugrpc || ab._debugpubsub) {
+            console.group('WAMP Welcome');
+            console.info(self._wsuri + '  [' + self._session_id + ']');
+            console.log(self._wamp_version);
+            console.log(self._server);
+            console.groupEnd();
+          }
+
+          // only now that we have received the initial server-to-client
+          // welcome message, fire application onopen() hook
+          if (self._websocket_onopen !== null) {
+            self._websocket_onopen();
+          }
+        } else {
+          throw 'protocol error (welcome message received more than once)';
+        }
+      }
+    };
+
+    self._websocket.onopen = function(e) {
+      // check if we can speak WAMP!
+      if (self._websocket.protocol !== ab._subprotocol) {
+        if (typeof self._websocket.protocol === 'undefined') {
+          // i.e. Safari does subprotocol negotiation (broken), but then
+          // does NOT set the protocol attribute of the websocket object (broken)
+          //
+          if (ab._debugws) {
+            console.group('WS Warning');
+            console.info(self._wsuri);
+            console.log(
+              'WebSocket object has no protocol attribute: WAMP subprotocol check skipped!'
+            );
+            console.groupEnd();
+          }
+        } else if (self._options && self._options.skipSubprotocolCheck) {
+          // WAMP subprotocol check disabled by session option
+          //
+          if (ab._debugws) {
+            console.group('WS Warning');
+            console.info(self._wsuri);
+            console.log('Server does not speak WAMP, but subprotocol check disabled by option!');
+            console.log(self._websocket.protocol);
+            console.groupEnd();
+          }
+        } else {
+          // we only speak WAMP .. if the server denied us this, we bail out.
+          //
+          self._websocket.close(1000, 'server does not speak WAMP');
+          throw "server does not speak WAMP (but '" + self._websocket.protocol + "' !)";
+        }
+      }
+      if (ab._debugws) {
+        console.group('WAMP Connect');
+        console.info(self._wsuri);
+        console.log(self._websocket.protocol);
+        console.groupEnd();
+      }
+      self._websocket_connected = true;
+      if (self._websocket_onconnect) {
+        self._websocket_onconnect();
+      }
+    };
+
+    self._websocket.onerror = function(e) {
+      // FF fires this upon unclean closes
+      // Chrome does not fire this
+    };
+
+    self._websocket.onclose = function(e) {
+      if (ab._debugws) {
+        if (self._websocket_connected) {
+          console.log(
+            'Autobahn connection to ' +
+              self._wsuri +
+              ' lost (code ' +
+              e.code +
+              ", reason '" +
+              e.reason +
+              "', wasClean " +
+              e.wasClean +
+              ').'
+          );
+        } else {
+          console.log(
+            'Autobahn could not connect to ' +
+              self._wsuri +
+              ' (code ' +
+              e.code +
+              ", reason '" +
+              e.reason +
+              "', wasClean " +
+              e.wasClean +
+              ').'
+          );
+        }
+      }
+
+      // fire app callback
+      if (self._websocket_onclose !== undefined) {
+        if (self._websocket_connected) {
+          if (e.wasClean) {
+            // connection was closed cleanly (closing HS was performed)
+            self._websocket_onclose(ab.CONNECTION_CLOSED, 'WS-' + e.code + ': ' + e.reason);
+          } else {
+            // connection was closed uncleanly (lost without closing HS)
+            self._websocket_onclose(ab.CONNECTION_LOST);
+          }
+        } else {
+          // connection could not be established in the first place
+          self._websocket_onclose(ab.CONNECTION_UNREACHABLE);
+        }
+      }
+
+      // cleanup - reconnect requires a new session object!
+      self._websocket_connected = false;
+      self._wsuri = null;
+      self._websocket_onopen = null;
+      self._websocket_onclose = null;
+      self._websocket = null;
+    };
+
+    self.log = function() {
+      if (self._options && 'sessionIdent' in self._options) {
+        console.group(
+          "WAMP Session '" + self._options.sessionIdent + "' [" + self._session_id + ']'
+        );
+      } else {
+        console.group('WAMP Session ' + '[' + self._session_id + ']');
+      }
+      for (var i = 0; i < arguments.length; ++i) {
+        console.log(arguments[i]);
+      }
+      console.groupEnd();
+    };
+  };
+
+  ab.Session.prototype._send = function(msg) {
+    var self = this;
+
+    if (!self._websocket_connected) {
+      throw 'Autobahn not connected';
+    }
+
+    var rmsg = JSON.stringify(msg);
+
+    self._websocket.send(rmsg);
+    self._txcnt += 1;
+
+    if (ab._debugws) {
+      console.group('WS Send');
+      console.info(self._wsuri + '  [' + self._session_id + ']');
+      console.log(self._txcnt);
+      console.log(rmsg);
+      console.groupEnd();
+    }
+  };
+
+  ab.Session.prototype.close = function() {
+    var self = this;
+
+    if (self._websocket_connected) {
+      self._websocket.close();
+    }
+  };
+
+  ab.Session.prototype.sessionid = function() {
+    var self = this;
+    return self._session_id;
+  };
+
+  ab.Session.prototype.wsuri = function() {
+    var self = this;
+    return self._wsuri;
+  };
+
+  ab.Session.prototype.shrink = function(uri, pass) {
+    var self = this;
+    if (pass === undefined) pass = true;
+    return self._prefixes.shrink(uri, pass);
+  };
+
+  ab.Session.prototype.resolve = function(curie, pass) {
+    var self = this;
+    if (pass === undefined) pass = true;
+    return self._prefixes.resolve(curie, pass);
+  };
+
+  ab.Session.prototype.prefix = function(prefix, uri) {
+    var self = this;
+
+    self._prefixes.set(prefix, uri);
+
+    if (ab._debugrpc || ab._debugpubsub) {
+      console.group('WAMP Prefix');
+      console.info(self._wsuri + '  [' + self._session_id + ']');
+      console.log(prefix);
+      console.log(uri);
+      console.groupEnd();
+    }
+
+    var msg = [ab._MESSAGE_TYPEID_PREFIX, prefix, uri];
+    self._send(msg);
+  };
+
+  ab.Session.prototype.subscribe = function(topicuri, callback) {
+    var self = this;
+
+    // subscribe by sending WAMP message when topic not already subscribed
+    //
+    var rtopicuri = self._prefixes.resolve(topicuri, true);
+    if (!(rtopicuri in self._subscriptions)) {
+      if (ab._debugpubsub) {
+        console.group('WAMP Subscribe');
+        console.info(self._wsuri + '  [' + self._session_id + ']');
+        console.log(topicuri);
+        console.log(callback);
+        console.groupEnd();
+      }
+
+      var msg = [ab._MESSAGE_TYPEID_SUBSCRIBE, topicuri];
+      self._send(msg);
+
+      self._subscriptions[rtopicuri] = [];
+    }
+
+    // add callback to event listeners list if not already in list
+    //
+    var i = self._subscriptions[rtopicuri].indexOf(callback);
+    if (i === -1) {
+      self._subscriptions[rtopicuri].push(callback);
+    } else {
+      throw 'callback ' + callback + ' already subscribed for topic ' + rtopicuri;
+    }
+  };
+
+  ab.Session.prototype.unsubscribe = function(topicuri, callback) {
+    var self = this;
+
+    var rtopicuri = self._prefixes.resolve(topicuri, true);
+    if (!(rtopicuri in self._subscriptions)) {
+      throw 'not subscribed to topic ' + rtopicuri;
+    } else {
+      var removed;
+      if (callback !== undefined) {
+        var idx = self._subscriptions[rtopicuri].indexOf(callback);
+        if (idx !== -1) {
+          removed = callback;
+          self._subscriptions[rtopicuri].splice(idx, 1);
+        } else {
+          throw 'no callback ' + callback + ' subscribed on topic ' + rtopicuri;
+        }
+      } else {
+        removed = self._subscriptions[rtopicuri].slice();
+        self._subscriptions[rtopicuri] = [];
+      }
+
+      if (self._subscriptions[rtopicuri].length === 0) {
+        delete self._subscriptions[rtopicuri];
+
+        if (ab._debugpubsub) {
+          console.group('WAMP Unsubscribe');
+          console.info(self._wsuri + '  [' + self._session_id + ']');
+          console.log(topicuri);
+          console.log(removed);
+          console.groupEnd();
+        }
+
+        var msg = [ab._MESSAGE_TYPEID_UNSUBSCRIBE, topicuri];
+        self._send(msg);
+      }
+    }
+  };
+
+  ab.Session.prototype.publish = function() {
+    var self = this;
+
+    var topicuri = arguments[0];
+    var event = arguments[1];
+
+    var excludeMe = null;
+    var exclude = null;
+    var eligible = null;
+
+    var msg = null;
+
+    if (arguments.length > 3) {
+      if (!(arguments[2] instanceof Array)) {
+        throw 'invalid argument type(s)';
+      }
+      if (!(arguments[3] instanceof Array)) {
+        throw 'invalid argument type(s)';
+      }
+
+      exclude = arguments[2];
+      eligible = arguments[3];
+      msg = [ab._MESSAGE_TYPEID_PUBLISH, topicuri, event, exclude, eligible];
+    } else if (arguments.length > 2) {
+      if (typeof arguments[2] === 'boolean') {
+        excludeMe = arguments[2];
+        msg = [ab._MESSAGE_TYPEID_PUBLISH, topicuri, event, excludeMe];
+      } else if (arguments[2] instanceof Array) {
+        exclude = arguments[2];
+        msg = [ab._MESSAGE_TYPEID_PUBLISH, topicuri, event, exclude];
+      } else {
+        throw 'invalid argument type(s)';
+      }
+    } else {
+      msg = [ab._MESSAGE_TYPEID_PUBLISH, topicuri, event];
+    }
+
+    if (ab._debugpubsub) {
+      console.group('WAMP Publish');
+      console.info(self._wsuri + '  [' + self._session_id + ']');
+      console.log(topicuri);
+      console.log(event);
+
+      if (excludeMe !== null) {
+        console.log(excludeMe);
+      } else {
+        if (exclude !== null) {
+          console.log(exclude);
+          if (eligible !== null) {
+            console.log(eligible);
+          }
+        }
+      }
+      console.groupEnd();
+    }
+
+    self._send(msg);
+  };
+
+  ab._connect = function(peer) {
+    // establish session to WAMP server
+    var sess = new ab.Session(
+      peer.wsuri,
+
+      // fired when session has been opened
+      function() {
+        peer.connects += 1;
+        peer.retryCount = 0;
+
+        // we are connected .. do awesome stuff!
+        peer.onConnect(sess);
+      },
+
+      // fired when session has been closed
+      function(code, reason) {
+        var stop = null;
+
+        switch (code) {
+          case ab.CONNECTION_CLOSED:
+            // the session was closed by the app
+            peer.onHangup(code, 'Connection was closed properly [' + reason + ']');
+            break;
+
+          case ab.CONNECTION_UNSUPPORTED:
+            // fatal: we miss our WebSocket object!
+            peer.onHangup(code, 'Browser does not support WebSocket.');
+            break;
+
+          case ab.CONNECTION_UNREACHABLE:
+            peer.retryCount += 1;
+
+            if (peer.connects === 0) {
+              // the connection could not be established in the first place
+              // which likely means invalid server WS URI or such things
+              peer.onHangup(code, 'Connection could not be established.');
+            } else {
+              // the connection was established at least once successfully,
+              // but now lost .. sane thing is to try automatic reconnects
+              if (peer.retryCount <= peer.options.maxRetries) {
+                // notify the app of scheduled reconnect
+                stop = peer.onHangup(
+                  ab.CONNECTION_UNREACHABLE_SCHEDULED_RECONNECT,
+                  'Connection unreachable - scheduled reconnect to occur in ' +
+                    peer.options.retryDelay / 1000 +
+                    ' second(s) - attempt ' +
+                    peer.retryCount +
+                    ' of ' +
+                    peer.options.maxRetries +
+                    '.',
+                  {
+                    delay: peer.options.retryDelay,
+                    retries: peer.retryCount,
+                    maxretries: peer.options.maxRetries
+                  }
+                );
+
+                if (!stop) {
+                  if (ab._debugconnect) {
+                    console.log('Connection unreachable - retrying (' + peer.retryCount + ') ..');
+                  }
+                  window.setTimeout(function() {
+                    ab._connect(peer);
+                  }, peer.options.retryDelay);
+                } else {
+                  if (ab._debugconnect) {
+                    console.log('Connection unreachable - retrying stopped by app');
+                  }
+                  peer.onHangup(
+                    ab.CONNECTION_RETRIES_EXCEEDED,
+                    'Number of connection retries exceeded.'
+                  );
+                }
+              } else {
+                peer.onHangup(
+                  ab.CONNECTION_RETRIES_EXCEEDED,
+                  'Number of connection retries exceeded.'
+                );
+              }
+            }
+            break;
+
+          case ab.CONNECTION_LOST:
+            peer.retryCount += 1;
+
+            if (peer.retryCount <= peer.options.maxRetries) {
+              // notify the app of scheduled reconnect
+              stop = peer.onHangup(
+                ab.CONNECTION_LOST_SCHEDULED_RECONNECT,
+                'Connection lost - scheduled ' +
+                  peer.retryCount +
+                  'th reconnect to occur in ' +
+                  peer.options.retryDelay / 1000 +
+                  ' second(s).',
+                {
+                  delay: peer.options.retryDelay,
+                  retries: peer.retryCount,
+                  maxretries: peer.options.maxRetries
+                }
+              );
+
+              if (!stop) {
+                if (ab._debugconnect) {
+                  console.log('Connection lost - retrying (' + peer.retryCount + ') ..');
+                }
+                window.setTimeout(function() {
+                  ab._connect(peer);
+                }, peer.options.retryDelay);
+              } else {
+                if (ab._debugconnect) {
+                  console.log('Connection lost - retrying stopped by app');
+                }
+                peer.onHangup(ab.CONNECTION_RETRIES_EXCEEDED, 'Connection lost.');
+              }
+            } else {
+              peer.onHangup(ab.CONNECTION_RETRIES_EXCEEDED, 'Connection lost.');
+            }
+            break;
+
+          default:
+            throw 'unhandled close code in ab._connect';
+        }
+      },
+
+      peer.options, // forward options to session class for specific WS/WAMP options
+      peer.onconnected
+    );
+  };
+
+  ab.connect = function(wsuri, onconnect, onhangup, options, onconnected) {
+    var peer = {};
+    peer.wsuri = wsuri;
+
+    if (!options) {
+      peer.options = {};
+    } else {
+      peer.options = options;
+    }
+
+    if (peer.options.retryDelay === undefined) {
+      peer.options.retryDelay = 5000;
+    }
+
+    if (peer.options.maxRetries === undefined) {
+      peer.options.maxRetries = 10;
+    }
+
+    if (peer.options.skipSubprotocolCheck === undefined) {
+      peer.options.skipSubprotocolCheck = false;
+    }
+
+    if (peer.options.skipSubprotocolAnnounce === undefined) {
+      peer.options.skipSubprotocolAnnounce = false;
+    }
+
+    if (!onconnect) {
+      throw 'onConnect handler required!';
+    } else {
+      peer.onConnect = onconnect;
+    }
+
+    if (!onhangup) {
+      peer.onHangup = function(code, reason, detail) {
+        if (ab._debugconnect) {
+          console.log(code, reason, detail);
+        }
+      };
+    } else {
+      peer.onHangup = onhangup;
+    }
+
+    peer.onconnected = onconnected;
+    peer.connects = 0; // total number of successful connects
+    peer.retryCount = 0; // number of retries since last successful connect
+
+    ab._connect(peer);
+  };
+
+  return ab;
+})();
