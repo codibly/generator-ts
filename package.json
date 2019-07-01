@@ -17,7 +17,8 @@
   },
   "files": [
     "generators",
-    "traits"
+    "traits",
+    "src"
   ],
   "main": "generators/index.js",
   "scripts": {
