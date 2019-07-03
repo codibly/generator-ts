@@ -2703,7 +2703,7 @@ from2@^2.1.0, from2@^2.1.1:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-fs-extra@^7.0.0:
+fs-extra@^7.0.0, fs-extra@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
   integrity sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==
@@ -2796,6 +2796,18 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
+
+generator-codibly-ts@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/generator-codibly-ts/-/generator-codibly-ts-1.0.0.tgz#cdad6cd89bcdae6d443574879cf46840ad7015a2"
+  integrity sha512-1focZ5MFqkTnvx8l9J3VCzu1raLOdqrzKVyB1k9iWmXQWTqsghgCHWRYaQ8aFzmmo3lCVvnhx8Zy6GbJc8ilyw==
+  dependencies:
+    chalk "^2.1.0"
+    fs-extra "^7.0.1"
+    node-emoji "^1.10.0"
+    sort-package-json "^1.22.1"
+    tslib "^1.9.3"
+    yeoman-generator "^3.2.0"
 
 genfun@^5.0.0:
   version "5.0.0"
@@ -8201,7 +8213,7 @@ yeoman-environment@^2.0.5, yeoman-environment@^2.3.0, yeoman-environment@^2.3.4:
     text-table "^0.2.0"
     untildify "^3.0.3"
 
-yeoman-generator@^3.1.1:
+yeoman-generator@^3.1.1, yeoman-generator@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/yeoman-generator/-/yeoman-generator-3.2.0.tgz#02077d2d7ff28fedc1ed7dad7f9967fd7c3604cc"
   integrity sha512-iR/qb2je3GdXtSfxgvOXxUW0Cp8+C6LaZaNlK2BAICzFNzwHtM10t/QBwz5Ea9nk6xVDQNj4Q889TjCXGuIv8w==

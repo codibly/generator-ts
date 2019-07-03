@@ -19,6 +19,7 @@ export = class AppGenerator extends Generator {
     this.composeWith(require.resolve("../config-webpack"), {});
     this.composeWith(require.resolve("../config-react"), {});
     this.composeWith(require.resolve("../config-storybook"), {});
+    this.composeWith(require.resolve("../config-gitlab-ci"), {});
     this.composeWith(require.resolve("../app-context"), {});
   }
 

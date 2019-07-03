@@ -76,7 +76,11 @@ describe("yo codibly-ts:config-lint", () => {
 
   it("adds tslint.json configuration file", () => {
     assert.jsonFileContent(`tslint.json`, {
-      extends: ["tslint:recommended", "tslint-config-prettier"],
+      extends: [
+        "@codibly/tslint-standard",
+        "tslint:recommended",
+        "tslint-config-prettier"
+      ],
       rules: {
         "object-literal-sort-keys": false,
         "interface-name": [true, "never-prefix"],

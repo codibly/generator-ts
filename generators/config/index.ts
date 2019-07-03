@@ -48,6 +48,10 @@ export = class ConfigGenerator extends Generator {
           {
             name: `React setup ${chalk.dim("(+ @testing-library/react)")}`,
             value: "react"
+          },
+          {
+            name: `Gitlab CI`,
+            value: "gitlab-ci"
           }
         ]
       }
