@@ -1,9 +1,10 @@
 import { AsyncStatus } from '@codibly/redux-async/Async.state';
-import { renderInApp } from 'App/test/renderInApp';
 import * as React from 'react';
 import { ComponentType, useState } from 'react';
 import { AutoSuggest } from '../AutoSuggest';
 import { AsyncAutoSuggest } from './AsyncAutoSuggest';
+import {render} from "@testing-library/react";
+import {getMuiProgress, getMuiTextFieldInputByLabel} from "@codibly/material-ui-testing";
 
 describe('AsyncAutoSuggest', () => {
   const allSuggestions: AutoSuggest.Suggestion[] = [
@@ -40,7 +41,7 @@ describe('AsyncAutoSuggest', () => {
   });
 
   it('should render loader in pending status', async () => {
-    const { getMuiProgress, getMuiTextFieldInputByLabel } = renderInApp(
+    const { container } = render(
       <AsyncAutoSuggestStateful
         label="Animal"
         name="animal"
@@ -52,7 +53,7 @@ describe('AsyncAutoSuggest', () => {
       />
     );
 
-    expect(getMuiTextFieldInputByLabel('Animal')).toBeDefined();
-    expect(getMuiProgress()).toBeDefined();
+    expect(getMuiTextFieldInputByLabel('Animal', container)).toBeDefined();
+    expect(getMuiProgress(container)).toBeDefined();
   });
 });

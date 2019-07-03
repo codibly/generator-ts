@@ -1,8 +1,5 @@
-import { PaginatedResponse } from 'Api/model/PaginatedResponse';
-import { FiltersAction } from 'Api/store/Filters/Filters.action';
-import { PaginationAction } from 'Api/store/Pagination/Pagination.action';
-import { SortingAction } from 'Api/store/Sorting/Sorting.action';
-import { async, AsyncAction } from '@codibly/redux-async/async.action';
+import { PaginatedResponse, FiltersAction, PaginationAction, SortingAction } from '@codibly/redux-query';
+import { async, AsyncAction } from '@codibly/redux-async';
 import { ThunkAction } from 'App/store/Thunk.action';
 import { UserApi } from '../../api/User/User.api';
 import { UserDto } from '../../api/User/User.dto';
@@ -31,7 +28,7 @@ export namespace UserAction {
     const query = {
       pagination: UserSelector.getPagination(getState()),
       sorting: UserSelector.getSorting(getState()),
-      filter: UserSelector.getFilterExpression(getState())
+      filter: UserSelector.getFilters(getState())
     };
 
     return dispatch(async(LIST_USERS, UserApi.list(query)));

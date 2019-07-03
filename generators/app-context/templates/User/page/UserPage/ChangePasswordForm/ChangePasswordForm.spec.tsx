@@ -2,9 +2,8 @@ import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { http } from 'Api';
-import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
-import { tick } from 'App/test/util/tick';
-import { waitForSubmission } from 'App/test/util/waitForSubmission';
+import { waitForSubmission, tick } from '@codibly/test-utils';
+import { renderInApp, RenderInAppResult } from 'App/test/renderInApp'
 import { ChangePasswordFormPure } from './ChangePasswordForm';
 import { ChangePasswordFormData } from './ChangePasswordForm.data';
 

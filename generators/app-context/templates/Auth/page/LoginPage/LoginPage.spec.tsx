@@ -3,8 +3,8 @@ import * as React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { http } from 'Api';
 import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
-import { tick } from 'App/test/util/tick';
-import { waitForSubmission } from 'App/test/util/waitForSubmission';
+import { tick } from '@codibly/test-utils';
+import { waitForSubmission } from '@codibly/test-utils';
 import { LoginPage } from './LoginPage';
 
 describe('<LoginPage />', () => {

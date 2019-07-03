@@ -1,7 +1,7 @@
 import { muteErrors, unmuteErrors } from '@codibly/mute-errors';
 import * as React from 'react';
-import { renderInApp } from '../../../test/renderInApp';
-import { tick } from '../../../test/util/tick';
+import { renderInApp } from 'App/test/renderInApp';
+import { tick } from '@codibly/test-utils';
 import { PageErrorBoundary } from './PageErrorBoundary';
 
 describe('PageErrorBoundary', () => {

@@ -9,8 +9,8 @@ import { createDetectorEnhancer, DetectableStore } from 'redux-detector';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 import { createContext } from '../createContext';
-import { appDetector } from '../store/app.detector';
-import { createAppReducer } from '../store/app.reducer';
+import { appDetector } from '../store/App.detector';
+import { createAppReducer } from '../store/App.reducer';
 
 export type RenderInAppResult = RenderResult &
   typeof muiQueries & { store: Store<any>; history: History };
@@ -32,7 +32,6 @@ export function renderInApp(
     const middlewareEnhancer = applyMiddleware(routerMiddleware(history), thunkMiddleware);
 
     // We want to migrate tests to use detectors as well. To do it iteratively we can use withDetectors flag.
-    // We are still missing saga :/
     const enhancer: StoreEnhancer =
       options && options.withDetectors
         ? composeEnhancers(detectorEnhancer, middlewareEnhancer)

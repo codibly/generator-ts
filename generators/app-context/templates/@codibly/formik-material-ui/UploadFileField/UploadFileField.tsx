@@ -3,7 +3,7 @@ import { FieldProps, getIn } from 'formik';
 import * as React from 'react';
 import { ReactNode, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { createFormikField } from '../../typed-formik';
+import { createFormikField } from '@codibly/typed-formik';
 import { DropzoneWrapper, UploadFieldWrapper } from './UploadFileField.style';
 import { UploadFileMessage } from './UploadFileMessage/UploadFileMessage';
 

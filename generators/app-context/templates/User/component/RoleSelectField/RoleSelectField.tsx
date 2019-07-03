@@ -1,5 +1,5 @@
 import MenuItem from '@material-ui/core/MenuItem';
-import { DefaultTextField } from 'App/component/DefaultTextField/DefaultTextField';
+import { DefaultTextField } from '@codibly/material-ui';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { Role } from '../../model/Role';

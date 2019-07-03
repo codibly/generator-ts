@@ -1,4 +1,4 @@
-import { DataTableColumn } from 'App/component/DataTable/DataTableColumn';
+import { DataTableColumn } from '@codibly/material-ui';
 import * as React from 'react';
 import { Role } from '../../../model/Role';
 import { User } from '../../../model/User';

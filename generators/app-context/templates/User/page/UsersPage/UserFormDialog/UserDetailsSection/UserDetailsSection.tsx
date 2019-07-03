@@ -3,7 +3,7 @@ import {
   FormDialogRow,
   FormDialogSection,
   FormDialogSubheader
-} from 'App/component/Dialog/FormDialog/FormDialog.style';
+} from '@codibly/material-ui';
 import { TextField } from 'App/form/TextField/TextField';
 import { FunctionComponent } from 'react';
 import * as React from 'react';

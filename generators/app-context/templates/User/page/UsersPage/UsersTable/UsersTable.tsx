@@ -1,12 +1,10 @@
-import { Filters } from 'Api/model/Filters';
-import { DataTable } from 'App/component/DataTable/DataTable';
+import { DataTable } from '@codibly/material-ui';
 import { AppState } from 'App/store/App.state';
-import { AsyncSelector } from '@codibly/redux-async/Async.selector';
+import { AsyncSelector } from '@codibly/redux-async';
 import { FunctionComponent } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Pagination } from '../../../../Api/model/Pagination';
-import { Sorting } from '../../../../Api/model/Sorting';
+import { Filters, Pagination, Sorting } from '@codibly/redux-query';
 import { User } from '../../../model/User';
 import { UserAction } from '../../../store/User/User.action';
 import { UserSelector } from '../../../store/User/User.selector';

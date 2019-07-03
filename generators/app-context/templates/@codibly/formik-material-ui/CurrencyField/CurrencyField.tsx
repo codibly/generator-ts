@@ -3,7 +3,7 @@ import { FieldProps, getIn } from 'formik';
 import * as React from 'react';
 import { Omit } from 'utility-types';
 import { useFormatNumber } from '../../react-intl-hook';
-import { createFormikField } from '../../typed-formik';
+import { createFormikField } from '@codibly/typed-formik';
 
 export type TextFieldProps = FieldProps & Omit<MuiTextFieldProps, 'error' | 'name' | 'value'>;
 

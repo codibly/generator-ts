@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ButtonProps } from '@material-ui/core/Button';
-import { SubmitButton } from 'App/form/SubmitButton/SubmitButton';
+import { SubmitButton } from '@codibly/material-ui';
 import { theme } from 'App/theme';
 import { Field, Form } from 'formik';
 import { ComponentType } from 'react';

@@ -1,5 +1,5 @@
 import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
-import { tick } from 'App/test/util/tick';
+import { tick } from '@codibly/test-utils';
 import * as React from 'react';
 import { fireEvent, RenderResult } from '@testing-library/react';
 import { ResetPasswordFormDumb } from './ResetPasswordForm';

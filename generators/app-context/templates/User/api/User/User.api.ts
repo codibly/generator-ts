@@ -1,8 +1,5 @@
 import { http } from 'Api';
-import { ApiMapper } from 'Api/api/Api.mapper';
-import { QueryMapper } from 'Api/api/Query/Query.mapper';
-import { PaginatedResponse } from 'Api/model/PaginatedResponse';
-import { Query } from 'Api/model/Query';
+import { ApiMapper, QueryMapper, PaginatedResponse, Query } from '@codibly/redux-query';
 import { User } from '../../model/User';
 import { UserDto } from './User.dto';
 import { UserMapper } from './User.mapper';

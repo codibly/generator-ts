@@ -2,7 +2,7 @@ import { getMuiRadioOrCheckboxLabelByText } from '@codibly/material-ui-testing';
 import { Form, Formik } from 'formik';
 import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { tick } from '../../../App/test/util/tick';
+import { tick } from '@codibly/test-utils';
 import { RadioGroupField } from './RadioGroupField';
 
 describe('RadioGroupField', () => {

@@ -1,5 +1,5 @@
 import { http } from 'Api';
-import { ApiMapper } from 'Api/api/Api.mapper';
+import { ApiMapper } from '@codibly/redux-query';
 import { UserMapper } from 'User/api/User/User.mapper';
 import { User } from 'User/model/User';
 import { AuthDto } from './Auth.dto';

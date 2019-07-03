@@ -1,5 +1,5 @@
 import TableCell from '@material-ui/core/TableCell';
-import { DataTableBodyCellProps } from 'App/component/DataTable/DataTableBodyCell/DataTableBodyCell';
+import { DataTableBodyCellProps } from '@codibly/material-ui';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { Role } from '../../../../model/Role';

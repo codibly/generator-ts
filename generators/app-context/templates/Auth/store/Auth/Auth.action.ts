@@ -1,6 +1,6 @@
 import { isProduction } from 'App/environment';
 import { AuthRoute } from 'App/route/auth';
-import { async, AsyncAction } from '@codibly/redux-async/async.action';
+import { async, AsyncAction } from '@codibly/redux-async';
 import { getQueryParam, hasExactMatch } from '@codibly/router-selector/routerSelector';
 import { ThunkAction } from 'App/store/Thunk.action';
 import LogRocket from 'logrocket';

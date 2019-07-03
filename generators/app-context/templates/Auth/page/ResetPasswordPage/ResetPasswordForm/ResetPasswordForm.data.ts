@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { combineValidators, composeValidators, isRequired, matchesField } from 'revalidate';
-import { ErrorCode } from 'Api/model/ErrorCode';
+import { ErrorCode } from 'Api/const/ErrorCode';
 import { AuthDto } from 'Auth/api/Auth/Auth.dto';
 
 export type ResetPasswordFormData = {

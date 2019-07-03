@@ -5,10 +5,10 @@ import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import '@testing-library/react/cleanup-after-each';
 
 // add mocks
-import './mock/createObjectURLMock';
-import './mock/documentRangeMock';
-import './mock/environmentMock';
-import './mock/windowLocationMock';
+import '@codibly/test-utils/mock/createObjectURLMock';
+import '@codibly/test-utils/mock/documentRangeMock';
+import '@codibly/test-utils/mock/environmentMock';
+import '@codibly/test-utils/mock/windowLocationMock';
 
 // increase timeout in case of expensive UI tests
 jest.setTimeout(15000);

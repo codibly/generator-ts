@@ -1,6 +1,4 @@
-import { FiltersState } from 'Api/store/Filters/Filters.state';
-import { PaginationState } from 'Api/store/Pagination/Pagination.state';
-import { SortingState } from 'Api/store/Sorting/Sorting.state';
+import { FiltersState, PaginationState, SortingState } from '@codibly/redux-query';
 import { User } from '../../model/User';
 
 export type UserState = {

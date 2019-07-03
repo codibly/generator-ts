@@ -3,13 +3,9 @@ import Button from '@material-ui/core/Button/Button';
 import DialogActions from '@material-ui/core/DialogActions/DialogActions';
 import PeopleIcon from '@material-ui/icons/PeopleRounded';
 import { openSnackbar } from '@rebean/snackbar';
-import { ValidationErrorDto } from 'Api/api/Validation/ValidationError.dto';
-import { ValidationErrorMapper } from 'Api/api/Validation/ValidationError.mapper';
-import { DialogIconTitle } from 'App/component/Dialog/DialogIconTitle/DialogIconTitle';
-import { FormDialog } from 'App/component/Dialog/FormDialog/FormDialog';
+import { DialogIconTitle, FormDialog, SubmitButton } from '@codibly/material-ui';
 import { ErrorMessage } from 'App/component/ErrorMessage/ErrorMessage';
 import { FormError } from 'App/component/FormError/FormError';
-import { SubmitButton } from 'App/form/SubmitButton/SubmitButton';
 import { AppState } from 'App/store/App.state';
 import { DialogAction } from '@codibly/redux-dialog/Dialog.action';
 import { DialogSelector } from '@codibly/redux-dialog/Dialog.selector';
@@ -96,12 +92,8 @@ export const UserFormDialog: ComponentClass<UserFormDialog.OwnProps> = connect(
       } catch (error) {
         dispatch(DomAction.scrollTop());
 
-        if (ValidationErrorDto.isValidationError(error.data)) {
-          setErrors(ValidationErrorMapper.toFormErrors(error.data));
-        } else {
-          dispatch(openSnackbar('Unknown error - please try again'));
-          setStatus({ error: 'Unknown error - please try again' });
-        }
+        dispatch(openSnackbar('Unknown error - please try again'));
+        setStatus({ error: 'Unknown error - please try again' });
       } finally {
         setSubmitting(false);
       }

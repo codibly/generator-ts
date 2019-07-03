@@ -1,4 +1,4 @@
-import { ApiDto } from '../../../Api/api/Api.dto';
+import { ApiDto } from '@codibly/redux-query';
 import { RoleDto } from '../Role/Role.dto';
 
 export namespace UserDto {

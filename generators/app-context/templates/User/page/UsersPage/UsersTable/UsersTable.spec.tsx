@@ -1,7 +1,7 @@
 import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
 import * as React from 'react';
 import '@testing-library/react/cleanup-after-each';
-import { Pagination } from '../../../../Api/model/Pagination';
+import { Pagination } from '@codibly/redux-query';
 import { UserApiMock } from '../../../api/User/User.mock';
 import { UserMapper } from '../../../api/User/User.mapper';
 import { User } from '../../../model/User';

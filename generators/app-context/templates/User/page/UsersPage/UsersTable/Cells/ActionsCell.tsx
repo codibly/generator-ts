@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import EditIcon from '@material-ui/icons/Edit';
 import ViewIcon from '@material-ui/icons/Pageview';
 import { openSnackbar } from '@rebean/snackbar';
-import { DataTableBodyCellProps } from 'App/component/DataTable/DataTableBodyCell/DataTableBodyCell';
+import { DataTableBodyCellProps } from '@codibly/material-ui';
 import { ActionsTableCell } from 'App/component/Table/ActionsTableCell/ActionsTableCell';
 import { AppState } from 'App/store/App.state';
 import { DialogAction } from '@codibly/redux-dialog/Dialog.action';

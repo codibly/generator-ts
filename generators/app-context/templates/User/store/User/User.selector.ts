@@ -1,9 +1,7 @@
-import { FilterExpression } from 'Api/model/FilterExpression';
-import { PaginationSelector } from 'Api/store/Pagination/Pagination.selector';
+import { PaginationSelector } from '@codibly/redux-query';
 import memoize from 'fast-memoize';
 import { createSelector } from 'reselect';
 import { AuthSelector } from 'Auth/store/Auth/Auth.selector';
-import { UserFilter } from '../../api/User/User.filter';
 import { User } from '../../model/User';
 import { UserSecurity } from '../../security/User.security';
 import { UserMountedState, UserState } from './User.state';
@@ -30,29 +28,6 @@ export namespace UserSelector {
   export const getFilters = createSelector(
     getUserDomain,
     (state) => state.filters
-  );
-
-  export const getFilterExpression = createSelector(
-    getFilters,
-    (filters) => {
-      const fields = Object.keys(filters || {});
-
-      const expressions = fields
-        .map((field) => {
-          switch (field) {
-            case 'query':
-              return UserFilter.search(filters[field]);
-
-            case 'role':
-              const selectedRoles = filters[field] || [];
-
-              return selectedRoles.length ? FilterExpression.oneOf(field, selectedRoles) : null;
-          }
-        })
-        .filter((expression) => !!expression) as FilterExpression[];
-
-      return expressions.length ? FilterExpression.and(expressions) : null;
-    }
   );
 
   export const canEditUser = memoize(() =>

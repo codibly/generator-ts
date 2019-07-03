@@ -3,7 +3,7 @@ import MuiTextField, { TextFieldProps } from '@material-ui/core/TextField';
 import {
   DefaultTextField,
   defaultTextFieldToTextField
-} from 'App/component/DefaultTextField/DefaultTextField';
+} from '@codibly/material-ui';
 import { Field, FieldConfig, FieldProps } from 'formik';
 import * as React from 'react';
 import { FunctionComponent } from 'react';

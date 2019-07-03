@@ -1,7 +1,7 @@
 import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
 import * as React from 'react';
 import '@testing-library/react/cleanup-after-each';
-import { tick } from 'App/test/util/tick';
+import { tick } from '@codibly/test-utils';
 import { UserApiMock } from '../../../api/User/User.mock';
 import { UserMapper } from '../../../api/User/User.mapper';
 import { UserCardPure } from './UserCard';

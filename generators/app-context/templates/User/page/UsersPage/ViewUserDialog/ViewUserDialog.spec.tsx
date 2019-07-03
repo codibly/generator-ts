@@ -1,7 +1,7 @@
 import { http } from 'Api';
 import { DialogAction } from '@codibly/redux-dialog/Dialog.action';
 import { renderInApp, RenderInAppResult } from 'App/test/renderInApp';
-import { tick } from 'App/test/util/tick';
+import { tick } from '@codibly/test-utils';
 import MockAdapter from 'axios-mock-adapter';
 import * as React from 'react';
 import { UserApiMock } from '../../../api/User/User.mock';

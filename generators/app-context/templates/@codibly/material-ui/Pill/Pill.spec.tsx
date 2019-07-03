@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import { renderInApp } from '../../../App/test/renderInApp';
+import { renderInApp } from 'App/test/renderInApp';
 import { Pill } from './Pill';
 
 describe('Pill', () => {

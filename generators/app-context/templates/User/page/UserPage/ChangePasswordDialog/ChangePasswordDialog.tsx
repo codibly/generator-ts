@@ -1,4 +1,4 @@
-import { FormDialog } from 'App/component/Dialog/FormDialog/FormDialog';
+import { FormDialog } from '@codibly/material-ui';
 import { FunctionComponent } from 'react';
 import * as React from 'react';
 import { ChangePasswordForm } from '../ChangePasswordForm/ChangePasswordForm';

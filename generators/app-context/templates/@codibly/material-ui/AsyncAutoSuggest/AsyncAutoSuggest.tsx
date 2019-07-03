@@ -2,8 +2,7 @@ import { InputAdornment } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
-// TODO: use async-status library when it will be published
-import { AsyncStatus } from '@codibly/redux-async/Async.state';
+import { AsyncStatus } from '@codibly/redux-async';
 import { AutoSuggest } from '../AutoSuggest';
 
 export namespace AsyncAutoSuggest {

@@ -1,0 +1,46 @@
+image: node:10.15.1
+
+stages:
+  - qa
+  - analyse
+
+cache:
+  key: '$CI_PROJECT_ID'
+  paths:
+    - .yarn
+
+before_script:
+  - yarn install --frozen-lockfile --cache-folder .yarn
+
+build:
+  stage: qa
+  script:
+    - yarn build
+  artifacts:
+    paths:
+      - dist
+
+lint:
+  stage: qa
+  script:
+    - yarn lint
+
+test:
+  stage: qa
+  script:
+    - yarn test --coverage --ci --no-cache
+  coverage: '/^Statements\s*:\s*([^%]+)/'
+  artifacts:
+    paths:
+      - coverage
+    reports:
+      junit: junit.xml
+
+sonar:
+  stage: analyse
+  image: codibly/sonar-scanner:1.0.1
+  before_script: []
+  dependencies:
+    - test
+  script:
+    - . gitlab-sonar-scanner -Dsonar.login=$SONAR_LOGIN

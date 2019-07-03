@@ -2,7 +2,7 @@ import { Form, Formik, FormikActions } from 'formik';
 import * as React from 'react';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import '@testing-library/react/cleanup-after-each';
-import { tick } from '../../../App/test/util/tick';
+import { tick } from '@codibly/test-utils';
 import { SwitchField } from './SwitchField';
 
 describe('SwitchField(Formik)', () => {
