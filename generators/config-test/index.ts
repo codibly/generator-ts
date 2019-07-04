@@ -15,10 +15,6 @@ export = class ConfigTestGenerator extends Generator {
         "jest-haste-map": "^24.4.0",
         "jest-resolve": "^24.4.0",
         "ts-jest": "^24.0.0"
-      },
-      jest: {
-        preset: "ts-jest",
-        testEnvironment: "jsdom"
       }
     });
     this.traits.addReadmeBadges(
@@ -27,10 +23,7 @@ export = class ConfigTestGenerator extends Generator {
   }
 
   public writing() {
-    this.fs.copy(
-      this.templatePath("src/index.spec.ts"),
-      this.destinationPath("src/index.spec.ts")
-    );
+    this.fs.copy(this.templatePath(""), this.destinationPath(""));
   }
 
   public install() {

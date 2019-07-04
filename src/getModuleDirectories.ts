@@ -39,7 +39,7 @@ function getModulesToChoices(rootDir: string): ModuleChoice[] {
 const NEW_MODULE = "new";
 
 const modulesListQuestion = (
-  modules: ChoiceType[],
+  modules: ChoiceType<any>[],
   message: string
 ): Question => ({
   type: "list",

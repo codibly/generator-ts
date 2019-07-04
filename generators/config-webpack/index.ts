@@ -28,9 +28,11 @@ export = class WebpackConfigGenerator extends Generator {
   }
 
   public writing() {
-    ["webpack.config.js", "src/index.tsx", "src/index.html"].forEach(file => {
-      this.fs.copy(this.templatePath(file), this.destinationPath(file));
-    });
+    this.fs.copyTpl(
+      this.templatePath("webpack.config.js"),
+      this.destinationPath("webpack.config.js"),
+      { rootDir: this.config.get("rootDir") }
+    );
   }
 
   public install() {

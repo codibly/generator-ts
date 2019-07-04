@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QueryMapper should map query model to query dto 1`] = `
+Object {
+  "f": "{\\"eq\\":[{\\"identifier\\":\\"id\\"},{\\"literal\\":\\"afef43-fcc5a3\\"}]}",
+  "p": Object {
+    "index": 2,
+    "size": 7,
+  },
+  "s": Object {
+    "direction": "asc",
+    "field": "name",
+  },
+}
+`;

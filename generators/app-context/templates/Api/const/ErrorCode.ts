@@ -1,0 +1,5 @@
+
+export enum ErrorCode {
+  VALIDATION_FAILED = 'VALIDATION_FAILED',
+  BAD_REQUEST = 'BAD_REQUEST'
+}

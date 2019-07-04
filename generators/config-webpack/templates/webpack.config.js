@@ -12,7 +12,7 @@ module.exports = (env = {}, options = {}) => {
   const config = {
     context: __dirname,
     entry: {
-      client: "./src/index.tsx"
+      client: "./<%= rootDir %>/App/index.tsx"
     },
     mode: options.mode,
     devtool: "source-map",
@@ -69,7 +69,7 @@ module.exports = (env = {}, options = {}) => {
         formatter: "codeframe"
       }),
       new HtmlPlugin({
-        template: "./src/index.html",
+        template: "./<%= rootDir %>/App/index.html",
         filename: "index.html",
         inject: "body"
       }),

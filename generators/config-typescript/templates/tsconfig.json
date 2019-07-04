@@ -11,11 +11,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strict": true,
-
     "moduleResolution": "node",
     "baseUrl": "./src",
     "esModuleInterop": true,
-
-    "sourceRoot": "./src"
+    "sourceRoot": "./src",
+    "noImplicitAny": false
   }
 }
