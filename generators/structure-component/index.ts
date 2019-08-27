@@ -18,8 +18,8 @@ interface FileConfigWithFunctionTemplate {
 type FileConfig = FileConfigWithStringTemplate | FileConfigWithFunctionTemplate;
 
 enum ComponentType {
-  CLASS = "class",
-  FUNCTION = "function"
+  CONNECTED = "connected",
+  PLAIN = "plain"
 }
 
 interface FileConfigAnswers {
@@ -98,12 +98,12 @@ export = class StructureComponentGenerator extends Generator {
         message: "What's type of the Component",
         choices: [
           {
-            name: `Function component (Stateless)`,
-            value: ComponentType.FUNCTION
+            name: `Plain component`,
+            value: ComponentType.PLAIN
           },
           {
-            name: "Class component (Stateful)",
-            value: ComponentType.CLASS
+            name: "Connected component",
+            value: ComponentType.CONNECTED
           }
         ]
       }
