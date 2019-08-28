@@ -4,7 +4,8 @@ export enum Task {
   COMPONENT = "component",
   API = "api",
   MODEL = "model",
-  MODULE = "module"
+  MODULE = "module",
+  STORE = "store"
 }
 
 export namespace Task {
@@ -12,7 +13,8 @@ export namespace Task {
     [Task.COMPONENT]: upperFirst(Task.COMPONENT),
     [Task.API]: upperFirst(Task.API),
     [Task.MODEL]: upperFirst(Task.MODEL),
-    [Task.MODULE]: upperFirst(Task.MODULE)
+    [Task.MODULE]: upperFirst(Task.MODULE),
+    [Task.STORE]: upperFirst(Task.STORE)
   };
 
   export function getLabel(task: Task): string {

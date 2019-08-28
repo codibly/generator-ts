@@ -28,6 +28,10 @@ export = class StructureGenerator extends Generator {
           {
             name: `Module ${emoji.get("large_orange_diamond")}`,
             value: Task.MODULE
+          },
+          {
+            name: `Store`,
+            value: Task.STORE
           }
         ]
       }
@@ -40,6 +44,7 @@ export = class StructureGenerator extends Generator {
       case Task.COMPONENT:
       case Task.API:
       case Task.MODEL:
+      case Task.STORE:
         this.composeWith(require.resolve(`../structure-inner`), { task });
     }
   }
