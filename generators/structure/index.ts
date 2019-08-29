@@ -32,6 +32,10 @@ export = class StructureGenerator extends Generator {
           {
             name: `Store`,
             value: Task.STORE
+          },
+          {
+            name: `Page`,
+            value: Task.PAGE
           }
         ]
       }
@@ -45,6 +49,7 @@ export = class StructureGenerator extends Generator {
       case Task.API:
       case Task.MODEL:
       case Task.STORE:
+      case Task.PAGE:
         this.composeWith(require.resolve(`../structure-inner`), { task });
     }
   }

@@ -91,4 +91,37 @@ describe("yo codibly-ts:structure-component", () => {
 
     assert.fileContent(`${path}.style.ts`, "jss");
   });
+
+  it("creates proper content in spec ", async () => {
+    await helpers
+      .run(require("../generators/structure"), {
+        resolved: require.resolve("../generators/structure/index.js"),
+        namespace: "codibly-ts:structure"
+      })
+      .withLocalConfig({ rootDir: "src", styling: "jss" })
+      .withPrompts({
+        task: "component",
+        isTaskNameSameAsModule: false,
+        type: "connected",
+        name: "OrganisationDetails",
+        module: "Organisation"
+      });
+
+    const path =
+      "src/Organisation/component/OrganisationDetails/OrganisationDetails";
+
+    assert.fileContent(
+      `${path}.spec.tsx`,
+      'import { OrganisationDetails } from "./OrganisationDetails";'
+    );
+    assert.fileContent(
+      `${path}.spec.tsx`,
+      "describe('<OrganisationDetails />'"
+    );
+    assert.fileContent(
+      `${path}.spec.tsx`,
+      "should render <OrganisationDetails />"
+    );
+    assert.fileContent(`${path}.spec.tsx`, "render(<OrganisationDetails />);");
+  });
 });
