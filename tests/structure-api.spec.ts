@@ -23,6 +23,7 @@ describe("yo codibly-ts:structure-api", () => {
   const dtoPath = `${path}.dto.ts`;
   const mapperPath = `${path}.mapper.ts`;
   const mockPath = `${path}.mock.ts`;
+  const endpointPath = `${path}.endpoint.ts`;
 
   it("generates required files", () => {
     assert.file([apiPath, dtoPath, mapperPath, mockPath]);
@@ -104,5 +105,9 @@ describe("yo codibly-ts:structure-api", () => {
       mockPath,
       "mock.onDelete('/api/user/:id').reply(status);"
     );
+  });
+
+  it("creates enum in Endpoint", () => {
+    assert.fileContent(endpointPath, "enum UserEndpoint");
   });
 });

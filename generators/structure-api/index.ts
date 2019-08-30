@@ -19,7 +19,7 @@ export = class StructureApiGenerator extends Generator {
   }
 
   public writing() {
-    ["api", "dto", "mapper", "mock"].forEach(file => {
+    ["api", "dto", "mapper", "mock", "endpoint"].forEach(file => {
       this.fs.copyTpl(
         this.templatePath(`${file}.ts`),
         this.destinationPath(
