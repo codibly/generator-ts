@@ -6,7 +6,8 @@ export enum Task {
   MODEL = "model",
   MODULE = "module",
   STORE = "store",
-  PAGE = "page"
+  PAGE = "page",
+  ROUTER = "router"
 }
 
 export namespace Task {
@@ -16,7 +17,8 @@ export namespace Task {
     [Task.MODEL]: upperFirst(Task.MODEL),
     [Task.MODULE]: upperFirst(Task.MODULE),
     [Task.STORE]: upperFirst(Task.STORE),
-    [Task.PAGE]: upperFirst(Task.PAGE)
+    [Task.PAGE]: upperFirst(Task.PAGE),
+    [Task.ROUTER]: upperFirst(Task.ROUTER)
   };
 
   export function getLabel(task: Task): string {

@@ -36,6 +36,10 @@ export = class StructureGenerator extends Generator {
           {
             name: `Page`,
             value: Task.PAGE
+          },
+          {
+            name: `Router`,
+            value: Task.ROUTER
           }
         ]
       }
@@ -50,6 +54,7 @@ export = class StructureGenerator extends Generator {
       case Task.MODEL:
       case Task.STORE:
       case Task.PAGE:
+      case Task.ROUTER:
         this.composeWith(require.resolve(`../structure-inner`), { task });
     }
   }

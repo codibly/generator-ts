@@ -1,8 +1,8 @@
 import camelCase from "lodash/fp/camelCase";
 import toUpper from "lodash/fp/toUpper";
 import Generator from "yeoman-generator";
+
 import { nameQuestion } from "../../src/questions";
-import { Config } from "../../src/config/Config";
 
 interface FileConfig {
   templateName: string;
@@ -15,7 +15,9 @@ export = class StructureApiGenerator extends Generator {
   private fileConfigs: FileConfig[];
 
   public async prompting() {
-    const { name } = await this.prompt(nameQuestion("Page", this.options.name));
+    const { name } = await this.prompt(
+      nameQuestion("Router", this.options.name)
+    );
 
     this.name = this.options.name || name;
   }
@@ -25,7 +27,7 @@ export = class StructureApiGenerator extends Generator {
   }
 
   public makeConfig() {
-    this.fileConfigs = this.getFileConfig(this.config.getAll() as Config);
+    this.fileConfigs = this.getFileConfig(this.name);
   }
 
   public writing() {
@@ -33,9 +35,9 @@ export = class StructureApiGenerator extends Generator {
       this.fs.copyTpl(
         this.templatePath(`${fileConfig.templateName}`),
         this.destinationPath(
-          `./${this.config.get("rootDir")}/${this.module}/page/${
-            this.name
-          }Page/${this.name}Page.${fileConfig.fileNameSuffix}`
+          `./${this.config.get("rootDir")}/${this.module}/router/${this.name}${
+            fileConfig.fileNameSuffix
+          }`
         ),
         {
           name: this.name,
@@ -46,22 +48,26 @@ export = class StructureApiGenerator extends Generator {
     });
   }
 
-  private getFileConfig = (config: Config): FileConfig[] => [
+  private getFileConfig = (name: string): FileConfig[] => [
     {
       templateName: `main.tsx`,
-      fileNameSuffix: "tsx"
+      fileNameSuffix: "Router.tsx"
+    },
+    {
+      templateName: `route.ts`,
+      fileNameSuffix: ".route.ts"
+    },
+    {
+      templateName: `data.tsx`,
+      fileNameSuffix: "Router.data.tsx"
     },
     {
       templateName: `load.tsx`,
-      fileNameSuffix: "load.tsx"
-    },
-    {
-      templateName: `style.${config.styling}.ts`,
-      fileNameSuffix: "style.ts"
+      fileNameSuffix: "Router.load.tsx"
     },
     {
       templateName: `spec.tsx`,
-      fileNameSuffix: "spec.tsx"
+      fileNameSuffix: "Router.spec.tsx"
     }
   ];
 };

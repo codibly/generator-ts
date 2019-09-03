@@ -2,6 +2,7 @@ import { Question } from "inquirer";
 import camelCase from "lodash/fp/camelCase";
 import Generator from "yeoman-generator";
 import { nameQuestion } from "../../src/questions";
+import { Config } from "../../src/config/Config";
 
 interface FileConfigWithStringTemplate {
   templateName: string;
@@ -24,11 +25,6 @@ enum ComponentType {
 
 interface FileConfigAnswers {
   type: ComponentType;
-}
-
-interface Config {
-  styling: "jss" | "styled-components" | "emotion";
-  rootDir: string;
 }
 
 export = class StructureComponentGenerator extends Generator {
