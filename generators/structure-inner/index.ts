@@ -11,7 +11,7 @@ const moduleListMessage = (task: string) =>
 const moduleInputMessage = (task: string) =>
   `What's the new Module name to put the ${task} into?`;
 
-const tasksToModuleNameIdentityCheck = [Task.API, Task.MODEL];
+const tasksToModuleNameIdentityCheck = [Task.API, Task.MODEL, Task.STORE];
 
 export = class StructureInnerGenerator extends Generator {
   private module: string;

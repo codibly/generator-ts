@@ -15,7 +15,7 @@ describe("yo codibly-ts:structure", () => {
         task: "component",
         isTaskNameSameAsModule: "n",
         module: "Post",
-        type: "function",
+        type: "connected",
         name: "PostDetails"
       });
   });

@@ -2,7 +2,7 @@ import assert from "yeoman-assert";
 import helpers from "yeoman-test";
 
 describe("yo codibly-ts:structure-component", () => {
-  it("tests function component with styled-components", async () => {
+  it("tests function plain component with styled-components", async () => {
     await helpers
       .run(require("../generators/structure"), {
         resolved: require.resolve("../generators/structure/index.js"),
@@ -13,7 +13,7 @@ describe("yo codibly-ts:structure-component", () => {
         task: "component",
         isTaskNameSameAsModule: false,
         module: "Post",
-        type: "function",
+        type: "plain",
         name: "PostDetails"
       });
 
@@ -32,7 +32,7 @@ describe("yo codibly-ts:structure-component", () => {
     assert.fileContent(`${path}.style.ts`, "styled-components");
   });
 
-  it("tests function component with emotion", async () => {
+  it("tests function plain component with emotion", async () => {
     await helpers
       .run(require("../generators/structure"), {
         resolved: require.resolve("../generators/structure/index.js"),
@@ -42,7 +42,7 @@ describe("yo codibly-ts:structure-component", () => {
       .withPrompts({
         task: "component",
         isTaskNameSameAsModule: false,
-        type: "function",
+        type: "plain",
         module: "Post",
         name: "PostDetails"
       });
@@ -62,7 +62,7 @@ describe("yo codibly-ts:structure-component", () => {
     assert.fileContent(`${path}.style.ts`, "emotion");
   });
 
-  it("tests class component", async () => {
+  it("tests function connected component", async () => {
     await helpers
       .run(require("../generators/structure"), {
         resolved: require.resolve("../generators/structure/index.js"),
@@ -72,7 +72,7 @@ describe("yo codibly-ts:structure-component", () => {
       .withPrompts({
         task: "component",
         isTaskNameSameAsModule: false,
-        type: "class",
+        type: "connected",
         name: "OrganisationDetails",
         module: "Organisation"
       });
@@ -87,9 +87,41 @@ describe("yo codibly-ts:structure-component", () => {
       `${path}.spec.tsx`
     ]);
 
-    assert.fileContent(`${path}.tsx`, "extends");
     assert.fileContent(`${path}.tsx`, "OrganisationDetails");
 
     assert.fileContent(`${path}.style.ts`, "jss");
+  });
+
+  it("creates proper content in spec ", async () => {
+    await helpers
+      .run(require("../generators/structure"), {
+        resolved: require.resolve("../generators/structure/index.js"),
+        namespace: "codibly-ts:structure"
+      })
+      .withLocalConfig({ rootDir: "src", styling: "jss" })
+      .withPrompts({
+        task: "component",
+        isTaskNameSameAsModule: false,
+        type: "connected",
+        name: "OrganisationDetails",
+        module: "Organisation"
+      });
+
+    const path =
+      "src/Organisation/component/OrganisationDetails/OrganisationDetails";
+
+    assert.fileContent(
+      `${path}.spec.tsx`,
+      'import { OrganisationDetails } from "./OrganisationDetails";'
+    );
+    assert.fileContent(
+      `${path}.spec.tsx`,
+      "describe('<OrganisationDetails />'"
+    );
+    assert.fileContent(
+      `${path}.spec.tsx`,
+      "should render <OrganisationDetails />"
+    );
+    assert.fileContent(`${path}.spec.tsx`, "render(<OrganisationDetails />);");
   });
 });

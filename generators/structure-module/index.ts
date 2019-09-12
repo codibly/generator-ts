@@ -17,5 +17,9 @@ export = class StructureModuleGenerator extends Generator {
       name: this.name,
       module: this.name
     });
+    this.composeWith(require.resolve(`../structure-store`), {
+      name: this.name,
+      module: this.name
+    });
   }
 };

@@ -9,7 +9,9 @@ export = class StructureApiGenerator extends Generator {
   private module: string;
 
   public async prompting() {
-    const { name } = await this.prompt(nameQuestion("API", this.options.name));
+    const { name } = await this.prompt(
+      nameQuestion("Store", this.options.name)
+    );
 
     this.name = this.options.name || name;
   }
@@ -19,11 +21,11 @@ export = class StructureApiGenerator extends Generator {
   }
 
   public writing() {
-    ["api", "dto", "mapper", "mock", "endpoint"].forEach(file => {
+    ["action", "detector", "reducer", "selector", "state"].forEach(file => {
       this.fs.copyTpl(
         this.templatePath(`${file}.ts`),
         this.destinationPath(
-          `./${this.config.get("rootDir")}/${this.module}/api/${this.name}/${
+          `./${this.config.get("rootDir")}/${this.module}/store/${this.name}/${
             this.name
           }.${file}.ts`
         ),

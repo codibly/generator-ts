@@ -2,6 +2,7 @@ import { Question } from "inquirer";
 import camelCase from "lodash/fp/camelCase";
 import Generator from "yeoman-generator";
 import { nameQuestion } from "../../src/questions";
+import { Config } from "../../src/config/Config";
 
 interface FileConfigWithStringTemplate {
   templateName: string;
@@ -18,17 +19,12 @@ interface FileConfigWithFunctionTemplate {
 type FileConfig = FileConfigWithStringTemplate | FileConfigWithFunctionTemplate;
 
 enum ComponentType {
-  CLASS = "class",
-  FUNCTION = "function"
+  CONNECTED = "connected",
+  PLAIN = "plain"
 }
 
 interface FileConfigAnswers {
   type: ComponentType;
-}
-
-interface Config {
-  styling: "jss" | "styled-components" | "emotion";
-  rootDir: string;
 }
 
 export = class StructureComponentGenerator extends Generator {
@@ -98,12 +94,12 @@ export = class StructureComponentGenerator extends Generator {
         message: "What's type of the Component",
         choices: [
           {
-            name: `Function component (Stateless)`,
-            value: ComponentType.FUNCTION
+            name: `Plain component`,
+            value: ComponentType.PLAIN
           },
           {
-            name: "Class component (Stateful)",
-            value: ComponentType.CLASS
+            name: "Connected component",
+            value: ComponentType.CONNECTED
           }
         ]
       }
